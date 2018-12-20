@@ -1,0 +1,4 @@
+<div class="card bg-light">
+  <h3 *ngIf="auth.authenticated">Welcome {{ auth.user.data.email }}</h3>
+  <h3 *ngIf="!auth.authenticated">You are not logged in</h3>
+</div>
