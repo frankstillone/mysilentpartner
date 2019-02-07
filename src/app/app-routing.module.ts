@@ -1,20 +1,40 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
+import { EmployeeHomeComponent } from './employee-home/employee-home.component';
+import { CustomerHomeComponent } from './customer-home/customer-home.component';
+import { OperatorHomeComponent } from './operator-home/operator-home.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'auth',
-    loadChildren: './auth/auth.module#AuthModule'
-  },
+    {
+        path: '',
+        redirectTo: 'auth',
+        pathMatch: 'full'
+    },
+    {
+        path: 'auth',
+        loadChildren: './auth/auth.module#AuthModule'
+    },
+    {
+        path: 'adminHome',
+        component: AdminHomeComponent
+    },
+    {
+        path: 'employeeHome',
+        component: EmployeeHomeComponent
+    },
+    {
+        path: 'customerHome',
+        component: CustomerHomeComponent
+    },
+    {
+        path: 'operatorHome',
+        component: OperatorHomeComponent
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

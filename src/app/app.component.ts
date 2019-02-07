@@ -1,24 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
+import { AppConfig } from './config';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'silentpartner';
-  constructor(
-    public auth: FormioAuthService,
-    public router: Router
-  ) {
-    this.auth.onLogin.subscribe(() => {
-      this.router.navigate(['/']);
-    });
+export class AppComponent implements OnInit {
 
-    this.auth.onLogout.subscribe(() => {
-      this.router.navigate(['auth/login']);
-    });
-  }
+    public appConfig = AppConfig;
+    localStorageRole: any;
+
+    constructor(public auth: FormioAuthService, public router: Router, private http: Http, private authService: AuthService) {
+        this.auth.onLogin.subscribe(() => {
+            const roleId = this.auth.user.roles[0];
+            if (this.appConfig.adminRoleId === roleId) {
+                this.router.navigate(['adminHome']);
+            } else if (this.appConfig.employeeRoleId === roleId) {
+                this.router.navigate(['employeeHome']);
+            } else if (this.appConfig.operatorRoleId === roleId) {
+                this.router.navigate(['operatorHome']);
+            } else if (this.appConfig.customerRoleId === roleId) {
+                this.router.navigate(['customerHome']);
+            }
+            this.authService.setGlobalRole(roleId);
+        });
+
+        this.auth.onLogout.subscribe(() => {
+            this.router.navigate(['auth/login']);
+        });
+    }
+
+    ngOnInit() {
+        this.authService.setGlobalRole(null);
+    }
+
 }
