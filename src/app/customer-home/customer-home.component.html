@@ -1,0 +1,172 @@
+<div *ngIf="showCustomerScreen">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#account">Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#billing">Billing</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#services">Services</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="account">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#summary1">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#paymentDetails">Payment Details</a>
+                </li>
+            </ul>
+            <p></p>
+            <div class="tab-content">
+                <div class="tab-pane container active" id="summary1">
+                    Summary
+                </div>
+                <div class="tab-pane container fade" id="paymentDetails">
+                    Payment Details
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="billing">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#summary2">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#invoices">Invoices</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#payments">Payments</a>
+                </li>
+            </ul>
+            <p></p>
+            <div class="tab-content">
+                <div class="tab-pane container active" id="summary2">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <tr>
+                            <th class="active">Billing Contact</th>
+                            <td>Bob Smith</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>555 77 854</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>bobsmith@example.com</td>
+                        </tr>
+                        <tr>
+                            <th>Email for Invoices</th>
+                            <td>bobsmith@work.com</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container fade" id="invoices">
+                    <table class="table table-condensed table-hover table-bordered">
+                        <thead class="thead-light">
+                            <th>Date</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Value</th>
+                            <th>Download</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane container fade" id="payments">
+                    <table class="table table-condensed table-hover table-bordered">
+                        <thead class="thead-light">
+                            <th>Payment Date</th>
+                            <th>Payment ID</th>
+                            <th>Payment Value</th>
+                            <th>Payment Method</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="services">
+            Nothning In Service
+        </div>
+    </div>
+</div>

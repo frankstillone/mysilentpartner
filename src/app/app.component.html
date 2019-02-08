@@ -1,21 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px;">
-  <div class="container">
-    <a class="navbar-brand" href="#"><img height="25px;" src="https://portal.form.io/images/formio-logo.png"> Angular Demo</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item" routerLinkActive="active">
-          <a *ngIf="!auth.authenticated" class="nav-link" routerLink="auth"><i class="fa fa-sign-in"></i> Login | Register</a>
-          <a *ngIf="auth.authenticated" class="nav-link" routerLink="auth" (click)="auth.logout()"><i class="fa fa-sign-out"></i> Logout</a>
-        </li>
-      </ul>
+    <div class="container">
+        <a class="navbar-brand" href="#"><img height="25px;" src="https://portal.form.io/images/formio-logo.png">
+            My Silent Partner
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item" routerLinkActive="active">
+                    <a *ngIf="!auth.authenticated" class="nav-link" routerLink="auth"><i class="fa fa-sign-in"></i>
+                        Login | Register</a>
+                    <a *ngIf="auth.authenticated" class="nav-link" routerLink="auth" (click)="auth.logout()"><i
+                            class="fa fa-sign-out"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
-<div class="container container-demo">
-  <router-outlet></router-outlet>
+<div class="container">
+    <router-outlet></router-outlet>
 </div>
