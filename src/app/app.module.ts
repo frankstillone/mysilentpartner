@@ -11,6 +11,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { OperatorHomeComponent } from './operator-home/operator-home.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
+import { CustomerServicesComponent } from './customer-services/customer-services.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { CustomerHomeComponent } from './customer-home/customer-home.component';
         AdminHomeComponent,
         EmployeeHomeComponent,
         OperatorHomeComponent,
-        CustomerHomeComponent
+        CustomerHomeComponent,
+        CustomerServicesComponent
     ],
     imports: [
         BrowserModule,

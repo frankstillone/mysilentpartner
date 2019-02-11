@@ -1,3 +1,158 @@
-<p>
-  employee-home works!
-</p>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#asUser">As User</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#asAdmin">As Admin</a>
+    </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+    <div class="tab-pane container active" id="asUser">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#summary1">Summary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#paySlips">Pay Slips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#training">Training</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#availableForms">Available Forms</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#importantLinks">Important Links</a>
+            </li>
+        </ul>
+        <p></p>
+        <div class="tab-content">
+            <div class="tab-pane container active" id="summary1">
+                <h3>Basic Details</h3>
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <th>First Name</th>
+                        <td>Mary</td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td>Mary Poppins</td>
+                    </tr>
+                    <tr>
+                        <th>Date of Birth</th>
+                        <td>1/Jan/1991</td>
+                    </tr>
+                    <tr>
+                        <th>Start Date</th>
+                        <td>1/Feb/2017</td>
+                    </tr>
+                </table>
+                <h3>Banking Details</h3>
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <th>Banking Institution</th>
+                        <td>Commonwealth Bank Of Australia</td>
+                    </tr>
+                    <tr>
+                        <th>BSB Number</th>
+                        <td>123123</td>
+                    </tr>
+                    <tr>
+                        <th>Bank Account Number</th>
+                        <td>1234567890</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab-pane container fade" id="paySlips">
+                A list of pay slips - future - place holder only
+            </div>
+            <div class="tab-pane container fade" id="training">
+                A summary of completed training modules - a place holder only - for future
+            </div>
+            <div class="tab-pane container fade" id="availableForms">
+                <input type="text" name="search" class="form-control"
+                    placeholder="Search by client id, client name or form name...">
+                <i id="filtersubmit" class="fa fa-search"></i>
+                <p></p>
+                <table class="table table-condensed table-hover table-bordered">
+                    <thead class="thead-light">
+                        <th>Client ID</th>
+                        <th>Client Name</th>
+                        <th>Form Name</th>
+                        <th>Comment</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>21001</td>
+                            <td>The Silent Partner</td>
+                            <td>Default Message Form</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>21001</td>
+                            <td>The Silent Partner</td>
+                            <td>Default Message Form</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>21001</td>
+                            <td>The Silent Partner</td>
+                            <td>Default Message Form</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>21001</td>
+                            <td>The Silent Partner</td>
+                            <td>Default Message Form</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Comment</p>
+                <ul>
+                    <li>This tab would contain a list of forms that an authenticated user is authorised to see</li>
+                    <li>the link would take you to the form inside the application</li>
+                    <li>the links I have put there take you out of the application</li>
+                </ul>
+            </div>
+            <div class="tab-pane container fade" id="importantLinks">
+                <ul class="nav flex-column nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane container fade" id="asAdmin">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#listOfClients">listOfClients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#spare">spare</a>
+            </li>
+        </ul>
+        <p></p>
+        <div class="tab-content">
+            <div class="tab-pane container active" id="listOfClients">
+                List of Clients
+            </div>
+            <div class="tab-pane container fade" id="spare">
+                <p>Spare</p>
+            </div>
+        </div>
+    </div>
+</div>

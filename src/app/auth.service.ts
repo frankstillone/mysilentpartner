@@ -18,11 +18,12 @@ export class AuthService {
     showAdminScreen: any = false;
     showEmployeeScreen: any = false;
     showOperatorScreen: any = false;
+    userName: any;
 
     constructor() { }
 
     setGlobalRole(parameterisedRoleId: any) {
-        if(parameterisedRoleId) {
+        if (parameterisedRoleId) {
             this.roleId = parameterisedRoleId;
         } else if (localStorage.getItem("formioUser")) {
             this.localStorageRole = JSON.parse(localStorage.getItem("formioUser"));
@@ -49,6 +50,27 @@ export class AuthService {
 
     getGlobalRole() {
         return this.roleIs;
+    }
+
+    setUserName(userName: any) {
+        if(!userName) {
+            this.userName = JSON.parse(localStorage.getItem("formioUser"));
+            this.userName = this.userName.data.userName;
+        } else {
+            this.userName = userName;
+        }
+    }
+
+    getUserName() {
+        return this.userName;
+    }
+
+    destroyRoles() {
+        this.roleIs = "";
+        this.showAdminScreen = false;
+        this.showCustomerScreen = false;
+        this.showEmployeeScreen = false;
+        this.showOperatorScreen = false;
     }
 
 }

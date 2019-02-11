@@ -1,0 +1,450 @@
+<div *ngIf="showCustomerScreen">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#users">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#account">Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#billing">Billing</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#services">Services</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="users">
+            <p> </p>
+            <p> </p>
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <tr class="current-user">
+                        <td>{{accountDetails?.userName.data.userName}}</td>
+                        <td>{{accountDetails?.userName.data.email}}</td>
+                        <td>admin</td>
+                        <td>Current User</td>
+                        <td><a href="#">Edit</a> | <a href="#" class="text-muted" style="pointer-events: none;cursor: default;text-decoration: none;">Disable</a> | <a href="#">Change Password</a></td>
+                    </tr>
+                    <tr *ngFor="let customerUser of customerUser">
+                        <td>{{customerUser?.data.userName}}</td>
+                        <td>{{customerUser?.data.email}}</td>
+                        <td>{{customerUser?.data.role}}</td>
+                        <td>{{customerUser?.data.status}}</td>
+                        <td><a href="#">Edit</a> | <a href="#">Disable</a> | <a href="#">Change Password</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p></p>
+        <p></p>
+        <div class="tab-pane container" id="account">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#accountDetails">Account Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#registeredOffice">Registered Office</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#principalPlaceOfBusiness">Principal Place of
+                        Business</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#mainOfficeHolder">Main Office Holder</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#principalContact">Principal Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#paymentInformation">Payment Information</a>
+                </li>
+            </ul>
+            <p></p>
+            <div class="tab-content">
+                <div class="tab-pane container active" id="accountDetails">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>Account ID</th>
+                            <td>{{accountDetails?.accountNumber}}</td>
+                        </tr>
+                        <tr>
+                            <th>Account Name</th>
+                            <td>{{accountDetails?.accountName}}</td>
+                        </tr>
+                        <tr>
+                            <th>ABN</th>
+                            <td>{{accountDetails?.abn}}</td>
+                        </tr>
+                        <tr>
+                            <th>Trading Name</th>
+                            <td>{{accountDetails?.tradingName}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container" id="registeredOffice">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>Address Line 1</th>
+                            <td>{{accountDetails?.registeredOfficeAddressLine1}}</td>
+                        </tr>
+                        <tr>
+                            <th>Address Line 2</th>
+                            <td>{{accountDetails?.registeredOfficeAddressLine2}}</td>
+                        </tr>
+                        <tr>
+                            <th>City/Suburb</th>
+                            <td>{{accountDetails?.registeredOfficeCity}}</td>
+                        </tr>
+                        <tr>
+                            <th>State</th>
+                            <td>{{accountDetails?.registeredOfficeState}}</td>
+                        </tr>
+                        <tr>
+                            <th>Post Code</th>
+                            <td>{{accountDetails?.registeredOfficePostcode}}</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>{{accountDetails?.registeredOfficeCountry}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container" id="principalPlaceOfBusiness">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>Address Line 1</th>
+                            <td>{{accountDetails?.placeBusinessAddressLine1}}</td>
+                        </tr>
+                        <tr>
+                            <th>Address Line 2</th>
+                            <td>{{accountDetails?.placeBusinessAddressLine2}}</td>
+                        </tr>
+                        <tr>
+                            <th>City/Suburb</th>
+                            <td>{{accountDetails?.placeBusinessCity}}</td>
+                        </tr>
+                        <tr>
+                            <th>State</th>
+                            <td>{{accountDetails?.placeBusinessState}}</td>
+                        </tr>
+                        <tr>
+                            <th>Post Code</th>
+                            <td>accountDetails.placeBusinessPostcode</td>
+                        </tr>
+                        <tr>
+                            <th>Country</th>
+                            <td>{{accountDetails?.placeBusinessCountry}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container" id="mainOfficeHolder">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>First Name</th>
+                            <td>{{accountDetails?.mainOfficeHolderFirstName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>{{accountDetails?.mainOfficeHolderLastName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{accountDetails?.mainOfficeHolderEmail}}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{accountDetails?.mainOfficeHolderPhone}}</td>
+                        </tr>
+                        <tr>
+                            <th>Director</th>
+                            <td>{{accountDetails?.mainOfficeHolderDirector}}</td>
+                        </tr>
+                        <tr>
+                            <th>Secretary</th>
+                            <td>accountDetails.mainOfficeHolderSecretary</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container" id="principalContact">
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>First Name</th>
+                            <td>{{accountDetails?.principalContactFirstName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>{{accountDetails?.principalContactLastName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{accountDetails?.principalContactEmail}}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{accountDetails?.principalContactPhone}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container fade" id="paymentInformation">
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <span>This pages shows what payment authorisation is in place for this account. Below are images
+                            of diagrammatically what this page would look like.</span>
+                    </div>
+                    <p>
+                        If payment By American Express Or Visa/Mastercard
+                    </p>
+                    <table class="table table-condensed table-bordered">
+                        <thead class="thead-light">
+                            <th>Payment By AMEX/Visa/MasterCard</th>
+                            <th>**** ****** *7387</th>
+                            <th>11/22</th>
+                            <th>Active</th>
+                            <th>Update/Change Payment Authorisation</th>
+                        </thead>
+                    </table>
+                    <p>If payment fy Direct Debit</p>
+                    <table class="table table-condensed table-bordered">
+                        <thead class="thead-light">
+                            <th>Payment By Direct Debit</th>
+                            <th>
+                                Commonwealth Bank Of Australia<br>
+                                BSB: 125 123<br>
+                                Account No: 1234 1234
+                            </th>
+                            <th></th>
+                            <th>Active</th>
+                            <th>Update/Change Payment Authorisation</th>
+                        </thead>
+                    </table>
+                    <p>If Card is expired</p>
+                    <table class="table table-condensed table-bordered ">
+                        <tr class="alert-danger font-weight-bold">
+                            <td>Payment By Visa/American Express</td>
+                            <td>**** ****** *7387</td>
+                            <td>12/18</td>
+                            <td>Expired</td>
+                            <td>Update/Change Payment Authorisation</td>
+                        </tr>
+                    </table>
+                    <p>If no payment authorisation in place</p>
+                    <table class="table table-condensed table-bordered">
+                        <thead class="thead-light">
+                            <th>There is no payment authorisation in place</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Update/Change Payment Authorisation</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="billing">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#summary2">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#invoices">Invoices</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#payments">Payments</a>
+                </li>
+            </ul>
+            <p></p>
+            <div class="tab-content">
+                <div class="tab-pane container active" id="summary2">
+                    <table class="table table-condensed table-bordered table-hover">
+                        <tr>
+                            <th>Billing Contact</th>
+                            <td>Bob Smith</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>555 77 854</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>bobsmith@example.com</td>
+                        </tr>
+                        <tr>
+                            <th>Email for Invoices</th>
+                            <td>bobsmith@work.com</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="tab-pane container fade" id="invoices">
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <span>This is a summary of all the invoices for this account. There would be a link where each
+                            invoice can be downloaded. At the bottom there would be a link where the user could download
+                            a csv table of all invoices</span>
+                    </div>
+                    <table class="table table-condensed table-hover table-bordered">
+                        <thead class="thead-light">
+                            <th>Date</th>
+                            <th>Invoice Number</th>
+                            <th>Invoice Value</th>
+                            <th>Download</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td><a href="#">Link</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Download CSV summary table</p>
+                </div>
+                <div class="tab-pane container fade" id="payments">
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        <span>This is a summary of all payments for this account. At the bottom there would be a link
+                            where the user could download a csv table of all payments.</span>
+                    </div>
+                    <table class="table table-condensed table-hover table-bordered">
+                        <thead class="thead-light">
+                            <th>Payment Date</th>
+                            <th>Payment ID</th>
+                            <th>Payment Value</th>
+                            <th>Payment Method</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                            <tr>
+                                <td>1/12/18</td>
+                                <td>876789</td>
+                                <td>$99.99</td>
+                                <td>Visa ***3567</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>Download csv summary table</p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="services">
+            <p></p>
+            <div class="alert alert-warning">
+                <i class="fa fa-exclamation-triangle"></i>
+                <span>This is a summary of all the invoices for this account. There would be a link where each
+                    invoice can be downloaded. At the bottom there would be a link where the user could download
+                    a csv table of all invoices</span>
+            </div>
+            <table class="table table-condensed table-hover table-bordered">
+                <thead class="thead-light">
+                    <th>ServiceID</th>
+                    <th>Service Type</th>
+                    <th>Service Name</th>
+                    <th>Comment</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7895</td>
+                        <td>Call Answering</td>
+                        <td>Mary Poppins Call Answering Service</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7895</td>
+                        <td>Call Answering</td>
+                        <td>Mary's Private Call Answering Service</td>
+                        <td>A second call answering service</td>
+                    </tr>
+                    <tr>
+                        <td>7895</td>
+                        <td>Virtual Address</td>
+                        <td>Mary Poppins Address Service</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7895</td>
+                        <td>Live Chat</td>
+                        <td>Mary Poppins Live Chat Service</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7895</td>
+                        <td>Email Processing</td>
+                        <td>Mary Poppins Email Processing Service</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div *ngIf="loading" class="loading">Loading&#8230;</div>

@@ -4,6 +4,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { OperatorHomeComponent } from './operator-home/operator-home.component';
+import { CustomerServicesComponent } from './customer-services/customer-services.component';
 
 const routes: Routes = [
     {
@@ -30,6 +31,10 @@ const routes: Routes = [
     {
         path: 'operatorHome',
         component: OperatorHomeComponent
+    },
+    {
+        path: 'customerServices',
+        component: CustomerServicesComponent
     }
 ];
 

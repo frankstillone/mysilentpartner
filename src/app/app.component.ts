@@ -28,15 +28,18 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['customerHome']);
             }
             this.authService.setGlobalRole(roleId);
+            this.authService.setUserName(this.auth.user.data.userName);
         });
 
         this.auth.onLogout.subscribe(() => {
+            this.authService.destroyRoles();
             this.router.navigate(['auth/login']);
         });
     }
 
     ngOnInit() {
         this.authService.setGlobalRole(null);
+        this.authService.setUserName(null);
     }
 
 }
