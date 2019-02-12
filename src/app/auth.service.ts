@@ -19,6 +19,7 @@ export class AuthService {
     showEmployeeScreen: any = false;
     showOperatorScreen: any = false;
     userName: any;
+    localRoleId: any;
 
     constructor() { }
 
@@ -52,10 +53,31 @@ export class AuthService {
         return this.roleIs;
     }
 
+    setRoleId(localRoleId: any) {
+        if(!localRoleId) {
+            this.localRoleId = JSON.parse(localStorage.getItem("formioUser"));
+            if(this.localRoleId) {
+                this.localRoleId = this.localRoleId.roles[0];
+            }
+        } else {
+            this.localRoleId = localRoleId;
+        }
+    }
+
+    getRoleId() {
+        return this.localRoleId;
+    }
+
+    getJwtToken() {
+        return localStorage.getItem("formioToken");
+    }
+
     setUserName(userName: any) {
         if(!userName) {
             this.userName = JSON.parse(localStorage.getItem("formioUser"));
-            this.userName = this.userName.data.userName;
+            if(this.userName) {
+                this.userName = this.userName.data.userName;
+            }
         } else {
             this.userName = userName;
         }

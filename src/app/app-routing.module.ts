@@ -5,6 +5,8 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { OperatorHomeComponent } from './operator-home/operator-home.component';
 import { CustomerServicesComponent } from './customer-services/customer-services.component';
+import { CreateCustomerAccountComponent } from './create-customer-account/create-customer-account.component';
+import { EmployeeFormComponent } from './employee-form/employee-form.component';
 
 const routes: Routes = [
     {
@@ -35,6 +37,14 @@ const routes: Routes = [
     {
         path: 'customerServices',
         component: CustomerServicesComponent
+    },
+    {
+        path: 'createCustomerAccount',
+        component: CreateCustomerAccountComponent
+    },
+    {
+        path: 'employeeForm',
+        component: EmployeeFormComponent
     }
 ];
 

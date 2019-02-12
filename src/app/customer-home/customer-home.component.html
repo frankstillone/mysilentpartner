@@ -9,7 +9,7 @@
 
     <div *ngIf="allAccounts.length == 0"><p>No Accounts yet.</p></div>
 
-    <div class="btn btn-primary">Create Account</div>
+    <div class="btn btn-primary" routerLink="/createCustomerAccount">Create Account</div>
 
     <div *ngIf="loading" class="loading">Loading&#8230;</div>
 </div>

@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
             }
             this.authService.setGlobalRole(roleId);
             this.authService.setUserName(this.auth.user.data.userName);
+            this.authService.setRoleId(this.auth.user.roles[0]);
         });
 
         this.auth.onLogout.subscribe(() => {
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authService.setRoleId(null);
         this.authService.setGlobalRole(null);
         this.authService.setUserName(null);
     }
