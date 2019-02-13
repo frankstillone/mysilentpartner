@@ -34,7 +34,9 @@
                         <td>{{accountDetails?.userName.data.email}}</td>
                         <td>admin</td>
                         <td>Current User</td>
-                        <td><a href="#">Edit</a> | <a href="#" class="text-muted" style="pointer-events: none;cursor: default;text-decoration: none;">Disable</a> | <a href="#">Change Password</a></td>
+                        <td><a href="#">Edit</a> | <a href="#" class="text-muted"
+                                style="pointer-events: none;cursor: default;text-decoration: none;">Disable</a> | <a
+                                href="#">Change Password</a></td>
                     </tr>
                     <tr *ngFor="let customerUser of customerUser">
                         <td>{{customerUser?.data.userName}}</td>
@@ -67,7 +69,7 @@
                     <a class="nav-link" data-toggle="tab" href="#principalContact">Principal Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#paymentInformation">Payment Information</a>
+                    <a class="nav-link" data-toggle="tab" (click)="getPayment()" href="#paymentInformation">Payment Information</a>
                 </li>
             </ul>
             <p></p>
@@ -197,57 +199,50 @@
                     </table>
                 </div>
                 <div class="tab-pane container fade" id="paymentInformation">
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <span>This pages shows what payment authorisation is in place for this account. Below are images
-                            of diagrammatically what this page would look like.</span>
+                    <div *ngIf="cardType">
+                        <table class="table table-condensed table-bordered">
+                            <thead class="thead-light">
+                                <th>Payment By AMEX/Visa/MasterCard</th>
+                                <th>{{paymentInformation.data.cardNumber}}</th>
+                                <th>{{paymentInformation.data.day}}</th>
+                                <th>Active</th>
+                                <th>Update/Change Payment Authorisation</th>
+                            </thead>
+                        </table>
                     </div>
-                    <p>
-                        If payment By American Express Or Visa/Mastercard
-                    </p>
-                    <table class="table table-condensed table-bordered">
-                        <thead class="thead-light">
-                            <th>Payment By AMEX/Visa/MasterCard</th>
-                            <th>**** ****** *7387</th>
-                            <th>11/22</th>
-                            <th>Active</th>
-                            <th>Update/Change Payment Authorisation</th>
-                        </thead>
-                    </table>
-                    <p>If payment fy Direct Debit</p>
-                    <table class="table table-condensed table-bordered">
-                        <thead class="thead-light">
-                            <th>Payment By Direct Debit</th>
-                            <th>
-                                Commonwealth Bank Of Australia<br>
-                                BSB: 125 123<br>
-                                Account No: 1234 1234
-                            </th>
-                            <th></th>
-                            <th>Active</th>
-                            <th>Update/Change Payment Authorisation</th>
-                        </thead>
-                    </table>
-                    <p>If Card is expired</p>
-                    <table class="table table-condensed table-bordered ">
-                        <tr class="alert-danger font-weight-bold">
-                            <td>Payment By Visa/American Express</td>
-                            <td>**** ****** *7387</td>
-                            <td>12/18</td>
-                            <td>Expired</td>
-                            <td>Update/Change Payment Authorisation</td>
-                        </tr>
-                    </table>
-                    <p>If no payment authorisation in place</p>
-                    <table class="table table-condensed table-bordered">
-                        <thead class="thead-light">
-                            <th>There is no payment authorisation in place</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>Update/Change Payment Authorisation</th>
-                        </thead>
-                    </table>
+                    <div *ngIf="directDebitType">
+                        <table class="table table-condensed table-bordered">
+                            <thead class="thead-light">
+                                <th>Payment By Direct Debit</th>
+                                <th>
+                                    {{paymentInformation.data.bankName}}<br>
+                                    BSB: {{paymentInformation.data.bsb}}<br>
+                                    Account No: {{paymentInformation.data.accountNumber2}}
+                                </th>
+                                <th>Active</th>
+                                <th>Update/Change Payment Authorisation</th>
+                            </thead>
+                        </table>
+                    </div>
+                    <div *ngIf="expiredType">
+                        <table class="table table-condensed table-bordered ">
+                            <tr class="alert-danger font-weight-bold">
+                                <td>Payment By Visa/American Express</td>
+                                <td>**** ****** *7387</td>
+                                <td>12/18</td>
+                                <td>Expired</td>
+                                <td>Update/Change Payment Authorisation</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="noPaymentMethod">
+                        <table class="table table-condensed table-bordered">
+                            <thead class="thead-light">
+                                <th>There is no payment authorisation in place</th>
+                                <th><a (click)="updatePayment()">New Payment Authorisation</a></th>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

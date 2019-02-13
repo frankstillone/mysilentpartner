@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppConfig } from './config';
 import { FormioAppConfig, FormioModule } from 'angular-formio';
 import { FormioAuthService, FormioAuthConfig } from 'angular-formio/auth';
-import { HttpModule } from '@angular/http'
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,9 @@ import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerServicesComponent } from './customer-services/customer-services.component';
 import { CreateCustomerAccountComponent } from './create-customer-account/create-customer-account.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SubmitResetPasswordComponent } from './submit-reset-password/submit-reset-password.component';
+import { NewPaymentComponent } from './new-payment/new-payment.component';
 
 @NgModule({
     declarations: [
@@ -24,13 +28,18 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
         CustomerHomeComponent,
         CustomerServicesComponent,
         CreateCustomerAccountComponent,
-        EmployeeFormComponent
+        EmployeeFormComponent,
+        ResetPasswordComponent,
+        SubmitResetPasswordComponent,
+        NewPaymentComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpModule,
-        FormioModule
+        FormioModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     providers: [
         FormioAuthService,

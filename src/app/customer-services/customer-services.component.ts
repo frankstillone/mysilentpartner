@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-customer-services',
@@ -21,8 +21,13 @@ export class CustomerServicesComponent implements OnInit {
     loading: boolean = false;
     accountDetails: any;
     customerUser: any;
+    paymentInformation: any;
+    cardType: boolean = false;
+    directDebitType: boolean = false;
+    expiredType:boolean = false;
+    noPaymentMethod: boolean = false;
 
-    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute) { }
+    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         if (this.authService.getGlobalRole() === this.authService.customer) {
@@ -54,9 +59,38 @@ export class CustomerServicesComponent implements OnInit {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/customerUsers/submission?data.accountName._id='+this.accountId, options).subscribe((res: any) => {
+        this.http.get(this.appConfig.appUrl + '/customerUsers/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
             let respon = res.json();
             this.customerUser = respon;
+            this.loading = false;
+        });
+    }
+
+    updatePayment() {
+        this.router.navigate(['payment'], {queryParams: {service: this.accountId }});
+    }
+
+    getPayment() {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/accountpaymentinformation/submission?data.accountId=' + this.accountId, options).subscribe((res: any) => {
+            let respon = res.json();
+            this.paymentInformation = respon[0];
+            if(this.paymentInformation) {
+                if(respon[0].data.paymentType === "Visa/Master Card") {
+                    this.cardType = true;
+                } else if(respon[0].data.paymentType === "Direct Debit") {
+                    this.directDebitType = true;
+                } else if(respon[0].data.paymentType === "expired") {
+                    this.expiredType = true;
+                } else {
+                    this.noPaymentMethod = true;
+                }
+            } else {
+                this.noPaymentMethod = true;
+            }
             this.loading = false;
         });
     }
