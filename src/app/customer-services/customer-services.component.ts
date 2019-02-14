@@ -66,8 +66,12 @@ export class CustomerServicesComponent implements OnInit {
         });
     }
 
-    updatePayment() {
+    newPayment() {
         this.router.navigate(['payment'], {queryParams: {service: this.accountId }});
+    }
+
+    updatePayment(paymentId) {
+        this.router.navigate(['updatePayment'], {queryParams: {service: this.accountId, id: paymentId }});
     }
 
     getPayment() {

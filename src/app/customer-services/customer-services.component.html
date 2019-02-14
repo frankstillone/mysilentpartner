@@ -206,7 +206,7 @@
                                 <th>{{paymentInformation.data.cardNumber}}</th>
                                 <th>{{paymentInformation.data.day}}</th>
                                 <th>Active</th>
-                                <th>Update/Change Payment Authorisation</th>
+                                <th (click)="updatePayment(paymentInformation._id)">Update/Change Payment Authorisation</th>
                             </thead>
                         </table>
                     </div>
@@ -220,7 +220,7 @@
                                     Account No: {{paymentInformation.data.accountNumber2}}
                                 </th>
                                 <th>Active</th>
-                                <th>Update/Change Payment Authorisation</th>
+                                <th (click)="updatePayment(paymentInformation._id)">Update/Change Payment Authorisation</th>
                             </thead>
                         </table>
                     </div>
@@ -239,7 +239,7 @@
                         <table class="table table-condensed table-bordered">
                             <thead class="thead-light">
                                 <th>There is no payment authorisation in place</th>
-                                <th><a (click)="updatePayment()">New Payment Authorisation</a></th>
+                                <th><a (click)="newPayment()">New Payment Authorisation</a></th>
                             </thead>
                         </table>
                     </div>

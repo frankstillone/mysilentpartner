@@ -10,6 +10,7 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SubmitResetPasswordComponent } from './submit-reset-password/submit-reset-password.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
+import { UpdatePaymentComponent } from './update-payment/update-payment.component';
 
 const routes: Routes = [
     {
@@ -60,6 +61,10 @@ const routes: Routes = [
     {
         path: 'payment',
         component: NewPaymentComponent
+    },
+    {
+        path: 'updatePayment',
+        component: UpdatePaymentComponent
     }
 ];
 
