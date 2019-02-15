@@ -19,6 +19,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SubmitResetPasswordComponent } from './submit-reset-password/submit-reset-password.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
+import { CustomerResetPasswordComponent } from './customer-reset-password/customer-reset-password.component';
+import { EmployeeResetPasswordComponent } from './employee-reset-password/employee-reset-password.component';
+import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-password/submit-employee-reset-password.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +36,10 @@ import { UpdatePaymentComponent } from './update-payment/update-payment.componen
         ResetPasswordComponent,
         SubmitResetPasswordComponent,
         NewPaymentComponent,
-        UpdatePaymentComponent
+        UpdatePaymentComponent,
+        CustomerResetPasswordComponent,
+        EmployeeResetPasswordComponent,
+        SubmitEmployeeResetPasswordComponent
     ],
     imports: [
         BrowserModule,

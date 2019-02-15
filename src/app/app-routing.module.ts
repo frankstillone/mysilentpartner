@@ -11,6 +11,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SubmitResetPasswordComponent } from './submit-reset-password/submit-reset-password.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
+import { CustomerResetPasswordComponent } from './customer-reset-password/customer-reset-password.component';
+import { EmployeeResetPasswordComponent } from './employee-reset-password/employee-reset-password.component';
+import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-password/submit-employee-reset-password.component';
 
 const routes: Routes = [
     {
@@ -52,11 +55,15 @@ const routes: Routes = [
     },
     {
         path: 'customerResetPassword',
-        component: ResetPasswordComponent
+        component: CustomerResetPasswordComponent
     },
     {
-        path: 'submitResetPassword',
+        path: 'submitCustomerResetPassword',
         component: SubmitResetPasswordComponent
+    },
+    {
+        path: 'submitEmployeeResetPassword',
+        component: SubmitEmployeeResetPasswordComponent
     },
     {
         path: 'payment',
@@ -65,6 +72,10 @@ const routes: Routes = [
     {
         path: 'updatePayment',
         component: UpdatePaymentComponent
+    },
+    {
+        path: 'employeeResetPassword',
+        component: EmployeeResetPasswordComponent
     }
 ];
 
