@@ -20,7 +20,7 @@ export class EmployeeFormComponent implements OnInit {
     constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
-        if (this.authService.getGlobalRole() === this.authService.employee) {
+        if (this.authService.showEmployeeScreen) {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
             this.activatedRoute.queryParams.subscribe(params => {
                 this.formPath = params['formPath'];

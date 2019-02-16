@@ -30,7 +30,7 @@ export class CustomerServicesComponent implements OnInit {
     constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        if (this.authService.getGlobalRole() === this.authService.customer) {
+        if (this.authService.showCustomerScreen) {
             this.showCustomerScreen = this.authService.showCustomerScreen;
             this.activatedRoute.queryParams.subscribe(params => {
                 this.accountId = params['service'];

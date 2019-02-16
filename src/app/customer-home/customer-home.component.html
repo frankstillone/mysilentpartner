@@ -1,4 +1,4 @@
-<div *ngIf="showCustomerScreen">
+<div *ngIf="auth.is.customer">
     <div *ngIf="allAccounts.length > 0">
         <p>Your Accounts</p>
         <div class="" *ngFor="let account of allAccounts">

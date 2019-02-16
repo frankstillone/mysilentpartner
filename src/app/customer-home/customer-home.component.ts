@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
+import { FormioAuthService } from 'angular-formio/auth';
 
 @Component({
     selector: 'app-customer-home',
@@ -15,15 +16,13 @@ export class CustomerHomeComponent implements OnInit {
     allAccounts: any =  [];
     loading: boolean = false;
 
-    constructor(private authService: AuthService, private http: Http) {}
+    constructor(private authService: AuthService, private http: Http, private auth: FormioAuthService) {}
 
     ngOnInit() {
-        if (this.authService.getGlobalRole() === this.authService.customer) {
+        this.auth.ready.then(() => {
             this.showCustomerScreen = this.authService.showCustomerScreen;
             this.getAllAccountDetails();
-        } else {
-            this.showCustomerScreen = false;
-        }
+        });
     }
 
     getAllAccountDetails(): void {

@@ -18,7 +18,7 @@ export class EmployeeHomeComponent implements OnInit {
     constructor(private authService: AuthService, private http: Http) { }
 
     ngOnInit() {
-        if (this.authService.getGlobalRole() === this.authService.employee) {
+        if (this.authService.showEmployeeScreen) {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
             this.getAccountDetails();
         } else {
