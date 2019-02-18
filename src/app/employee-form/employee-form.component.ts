@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
 import { ActivatedRoute } from '@angular/router';
 import * as $ from 'jquery';
+import { FormioAuthService } from 'angular-formio/auth';
 
 @Component({
     selector: 'app-employee-form',
@@ -17,22 +18,15 @@ export class EmployeeFormComponent implements OnInit {
     loading: boolean = false;
     formPath: any;
 
-    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute) { }
+    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private auth: FormioAuthService) { }
 
     ngOnInit() {
-        if (this.authService.showEmployeeScreen) {
+        this.auth.ready.then(() => {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
             this.activatedRoute.queryParams.subscribe(params => {
                 this.formPath = params['formPath'];
             });
-            let userNameFromService = this.authService.getUserName();
-            setTimeout(function () {
-                var userName = userNameFromService;
-                $('input[name="data[employeeName]"]').val(userName).prop('disabled', true);
-            }, 2000);
-        } else {
-            this.showEmployeeScreen = false;
-        }
+        });
     }
 
 }

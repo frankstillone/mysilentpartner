@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.auth.ready.then(() => {
-            console.log(this.auth.is.customer);
             this.authService.setGlobalRole(this.auth.is);
         });
         this.authService.setRoleId(null);

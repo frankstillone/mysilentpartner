@@ -17,16 +17,13 @@ export class AuthService {
     constructor() { }
 
     setGlobalRole(roleIs: any) {
-        console.log(roleIs.customer);
         if (roleIs.administrator) {
-            console.log("I am customer1");
             this.showAdminScreen = true;
         } else if (roleIs.employee) {
             this.showEmployeeScreen = true;
         } else if (roleIs.operator) {
             this.showOperatorScreen = true;
         } else if (roleIs.customer) {
-            console.log("I am customer");
             this.showCustomerScreen = true;
         }
     }

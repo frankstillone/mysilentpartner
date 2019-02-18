@@ -5,6 +5,7 @@ import { FormioAppConfig, FormioModule } from 'angular-formio';
 import { FormioAuthService, FormioAuthConfig } from 'angular-formio/auth';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormioResources } from 'angular-formio/resource';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +52,7 @@ import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-pa
     ],
     providers: [
         FormioAuthService,
+        FormioResources,
         { 
             provide: FormioAppConfig, useValue: AppConfig
         },

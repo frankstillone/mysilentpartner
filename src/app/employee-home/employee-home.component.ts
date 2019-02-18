@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
+import { FormioAuthService } from 'angular-formio/auth';
 
 @Component({
     selector: 'app-employee-home',
@@ -15,15 +16,13 @@ export class EmployeeHomeComponent implements OnInit {
     loading: boolean = false;
     availableForms: any;
 
-    constructor(private authService: AuthService, private http: Http) { }
+    constructor(private authService: AuthService, private http: Http, private auth: FormioAuthService) { }
 
     ngOnInit() {
-        if (this.authService.showEmployeeScreen) {
+        this.auth.ready.then(() => {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
             this.getAccountDetails();
-        } else {
-            this.showEmployeeScreen = false;
-        }
+        });
     }
 
     getAccountDetails(): void {
