@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormioAuthService } from 'angular-formio/auth';
 
 @Component({
     selector: 'app-customer-services',
@@ -26,26 +27,29 @@ export class CustomerServicesComponent implements OnInit {
     directDebitType: boolean = false;
     expiredType:boolean = false;
     noPaymentMethod: boolean = false;
+    emailProcessingServices: any;
+    liveChatServices: any;
+    callAnsweringServices: any;
+    addressLicenseServices: any;
 
-    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router) { }
+    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public auth: FormioAuthService) { }
 
     ngOnInit() {
-        if (this.authService.showCustomerScreen) {
+        this.auth.ready.then(() => {
             this.showCustomerScreen = this.authService.showCustomerScreen;
             this.activatedRoute.queryParams.subscribe(params => {
-                this.accountId = params['service'];
+                this.accountId = params['accountId'];
                 this.getAccountDetails();
                 this.getUsersForAccount();
             });
-        } else {
-            this.showCustomerScreen = false;
-        }
+        });
     }
 
     getAccountDetails(): void {
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
         this.http.get(this.appConfig.appUrl + '/account/submission?_id=' + this.accountId, options).subscribe((res: any) => {
             let respon = res.json();
@@ -58,8 +62,9 @@ export class CustomerServicesComponent implements OnInit {
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/customerUsers/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
+        this.http.get(this.appConfig.appUrl + '/userAccount/submission?data.account._id=' + this.accountId, options).subscribe((res: any) => {
             let respon = res.json();
             this.customerUser = respon;
             this.loading = false;
@@ -95,6 +100,30 @@ export class CustomerServicesComponent implements OnInit {
             } else {
                 this.noPaymentMethod = true;
             }
+            this.loading = false;
+        });
+    }
+
+    getAccountServices(): void {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/emailprocessingservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
+            this.emailProcessingServices = res.json();
+            this.loading = false;
+        });
+        this.http.get(this.appConfig.appUrl + '/livechatservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
+            this.liveChatServices = res.json();
+            this.loading = false;
+        });
+        this.http.get(this.appConfig.appUrl + '/callansweringservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
+            this.callAnsweringServices = res.json();
+            this.loading = false;
+        });
+        this.http.get(this.appConfig.appUrl + '/addresslicenseservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
+            this.addressLicenseServices = res.json();
             this.loading = false;
         });
     }

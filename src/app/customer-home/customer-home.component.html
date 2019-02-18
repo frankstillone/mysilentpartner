@@ -2,7 +2,7 @@
     <div *ngIf="allAccounts.length > 0">
         <p>Your Accounts</p>
         <div class="" *ngFor="let account of allAccounts">
-            <a [routerLink]="['../customerServices']" [queryParams]="{service: account._id}">{{account.data.tradingName}}</a>
+            <a [routerLink]="['../customerServices']" [queryParams]="{accountId: account._id}">{{account.data.tradingName}}</a>
         </div>
         <p></p>
     </div>

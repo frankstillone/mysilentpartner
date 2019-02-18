@@ -11,7 +11,7 @@
             <a class="nav-link" data-toggle="tab" href="#billing">Billing</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#services">Services</a>
+            <a class="nav-link" data-toggle="tab" href="#services" (click)="getAccountServices()">Services</a>
         </li>
     </ul>
 
@@ -39,10 +39,10 @@
                                 href="#">Change Password</a></td>
                     </tr>
                     <tr *ngFor="let customerUser of customerUser">
-                        <td>{{customerUser?.data.userName}}</td>
-                        <td>{{customerUser?.data.email}}</td>
-                        <td>{{customerUser?.data.role}}</td>
-                        <td>{{customerUser?.data.status}}</td>
+                        <td>{{customerUser?.data.user.data.userName}}</td>
+                        <td>{{customerUser?.data.user.data.email}}</td>
+                        <td>{{customerUser?.data.user.data.role}}</td>
+                        <td>{{customerUser?.data.user.data.status}}</td>
                         <td><a href="#">Edit</a> | <a href="#">Disable</a> | <a href="#">Change Password</a></td>
                     </tr>
                 </tbody>
@@ -393,12 +393,6 @@
         </div>
         <div class="tab-pane container fade" id="services">
             <p></p>
-            <div class="alert alert-warning">
-                <i class="fa fa-exclamation-triangle"></i>
-                <span>This is a summary of all the invoices for this account. There would be a link where each
-                    invoice can be downloaded. At the bottom there would be a link where the user could download
-                    a csv table of all invoices</span>
-            </div>
             <table class="table table-condensed table-hover table-bordered">
                 <thead class="thead-light">
                     <th>ServiceID</th>
@@ -407,34 +401,28 @@
                     <th>Comment</th>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let callAnsweringService of callAnsweringServices">
                         <td>7895</td>
-                        <td>Call Answering</td>
-                        <td>Mary Poppins Call Answering Service</td>
+                        <td>{{callAnsweringService?.data?.serviceType}}</td>
+                        <td>{{callAnsweringService?.data?.serviceName}}</td>
                         <td></td>
                     </tr>
-                    <tr>
+                    <tr *ngFor="let addressService of addressLicenseServices">
                         <td>7895</td>
-                        <td>Call Answering</td>
-                        <td>Mary's Private Call Answering Service</td>
-                        <td>A second call answering service</td>
-                    </tr>
-                    <tr>
-                        <td>7895</td>
-                        <td>Virtual Address</td>
-                        <td>Mary Poppins Address Service</td>
+                        <td>{{addressService?.data?.serviceType}}</td>
+                        <td>{{addressService?.data?.serviceName}}</td>
                         <td></td>
                     </tr>
-                    <tr>
+                    <tr *ngFor="let liveChatService of liveChatServices">
                         <td>7895</td>
-                        <td>Live Chat</td>
-                        <td>Mary Poppins Live Chat Service</td>
+                        <td>{{liveChatService?.data?.serviceType}}</td>
+                        <td>{{liveChatService?.data?.serviceName}}</td>
                         <td></td>
                     </tr>
-                    <tr>
+                    <tr *ngFor="let emailProcessingService of emailProcessingServices">
                         <td>7895</td>
-                        <td>Email Processing</td>
-                        <td>Mary Poppins Email Processing Service</td>
+                        <td>{{emailProcessingService?.data?.serviceType}}</td>
+                        <td>{{emailProcessingService?.data?.serviceName}}</td>
                         <td></td>
                     </tr>
                 </tbody>
