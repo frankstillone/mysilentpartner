@@ -29,7 +29,9 @@ export class SubmitEmployeeResetPasswordComponent implements OnInit {
         const employee = new Formio(this.appConfig.appUrl + '/employee/submission/' + this.auth.user._id);
         this.auth.user.data.password = submission.data.newPassword;
         this.authService.setRoleId(null);
-        this.authService.setGlobalRole(null);
+        this.auth.ready.then(() => {
+            this.authService.setGlobalRole(this.auth.is);
+        });
         this.authService.setUserName(null);
         employee.saveSubmission(this.auth.user).then(() => {
             this.router.navigate(['/employeeHome']);
