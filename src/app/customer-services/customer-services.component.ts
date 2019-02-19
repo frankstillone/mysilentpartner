@@ -64,7 +64,7 @@ export class CustomerServicesComponent implements OnInit {
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/userAccount/submission?data.account._id=' + this.accountId, options).subscribe((res: any) => {
+        this.http.get(this.appConfig.appUrl + '/customeraccount/submission?data.account._id=' + this.accountId, options).subscribe((res: any) => {
             let respon = res.json();
             this.customerUser = respon;
             this.loading = false;

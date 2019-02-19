@@ -39,10 +39,12 @@
                                 href="#">Change Password</a></td>
                     </tr>
                     <tr *ngFor="let customerUser of customerUser">
-                        <td>{{customerUser?.data.user.data.userName}}</td>
-                        <td>{{customerUser?.data.user.data.email}}</td>
-                        <td>{{customerUser?.data.user.data.role}}</td>
-                        <td>{{customerUser?.data.user.data.status}}</td>
+                        <td>{{customerUser?.data.customer.data.userName}}</td>
+                        <td>{{customerUser?.data?.customer?.data?.email}}</td>
+                        <!-- <td>{{customerUser?.data.user.data.role}}</td> -->
+                        <!-- <td>{{customerUser?.data.user.data.status}}</td> -->
+                        <td></td>
+                        <td></td>
                         <td><a href="#">Edit</a> | <a href="#">Disable</a> | <a href="#">Change Password</a></td>
                     </tr>
                 </tbody>
