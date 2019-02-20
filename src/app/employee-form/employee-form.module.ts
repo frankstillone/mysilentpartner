@@ -11,7 +11,7 @@ import { FormioResource, FormioResourceRoutes, FormioResourceConfig, FormioResou
         FormioResource,
         RouterModule.forChild(FormioResourceRoutes())
     ],
-    providers:[
+    providers: [
         FormioResourceService,
         {
             provide: FormioResourceConfig, useValue: {
