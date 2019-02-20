@@ -1,3 +1,78 @@
-<p>
-  employee-home works!
-</p>
+<div *ngIf="showEmployeeScreen">
+    <p>Hi Vicky,</p>
+    <p>Welcome to The Silent Partner Employee Portal!</p>
+    <p></p>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#summary1">Summary</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#paySlips">Pay Slips</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#training">Training</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#availableForms">Available Forms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#importantLinks">Important Links</a>
+        </li>
+    </ul>
+    <p></p>
+    <div class="tab-content">
+        <div class="tab-pane container active" id="summary1">
+            Summary
+        </div>
+        <div class="tab-pane container fade" id="paySlips">
+            A list of pay slips - future - place holder only
+        </div>
+        <div class="tab-pane container fade" id="training">
+            A summary of completed training modules - a place holder only - for future
+        </div>
+        <div class="tab-pane container fade" id="availableForms">
+            <!-- <input type="text" name="search" class="form-control"
+                    placeholder="Search by client id, client name or form name...">
+                <i id="filtersubmit" class="fa fa-search"></i> -->
+            <p></p>
+            <table class="table table-condensed table-hover table-bordered">
+                <thead class="thead-light">
+                    <th></th>
+                    <th>Form Name</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let availableForm of availableForms;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{availableForm.title}}</td>
+                        <td><a [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}">Link</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Comment</p>
+            <ul>
+                <li>This tab would contain a list of forms that an authenticated user is authorised to see</li>
+                <li>the link would take you to the form inside the application</li>
+                <li>the links I have put there take you out of the application</li>
+            </ul>
+        </div>
+        <div class="tab-pane container fade" id="importantLinks">
+            <!-- <ul class="nav flex-column nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="loading">Loading&#8230;</div>

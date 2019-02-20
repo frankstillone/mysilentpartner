@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
 import { AppConfig } from './config';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -17,26 +17,35 @@ export class AppComponent implements OnInit {
 
     constructor(public auth: FormioAuthService, public router: Router, private http: Http, private authService: AuthService) {
         this.auth.onLogin.subscribe(() => {
-            const roleId = this.auth.user.roles[0];
-            if (this.appConfig.adminRoleId === roleId) {
-                this.router.navigate(['adminHome']);
-            } else if (this.appConfig.employeeRoleId === roleId) {
-                this.router.navigate(['employeeHome']);
-            } else if (this.appConfig.operatorRoleId === roleId) {
-                this.router.navigate(['operatorHome']);
-            } else if (this.appConfig.customerRoleId === roleId) {
-                this.router.navigate(['customerHome']);
-            }
-            this.authService.setGlobalRole(roleId);
+            this.auth.ready.then(() => {
+                this.authService.setGlobalRole(this.auth.is);
+                if (this.auth.is.administrator) {
+                    this.router.navigate(['adminHome']);
+                } else if (this.auth.is.employee) {
+                    this.router.navigate(['employeeHome']);
+                } else if (this.auth.is.operator) {
+                    this.router.navigate(['operatorHome']);
+                } else if (this.auth.is.customer) {
+                    this.router.navigate(['customerHome']);
+                }
+            });
+
+            this.authService.setUserName(this.auth.user.data.userName);
+            this.authService.setRoleId(this.auth.user.roles[0]);
         });
 
         this.auth.onLogout.subscribe(() => {
+            this.authService.destroyRoles();
             this.router.navigate(['auth/login']);
         });
     }
 
     ngOnInit() {
-        this.authService.setGlobalRole(null);
+        this.auth.ready.then(() => {
+            this.authService.setGlobalRole(this.auth.is);
+        });
+        this.authService.setRoleId(null);
+        this.authService.setUserName(null);
     }
 
 }
