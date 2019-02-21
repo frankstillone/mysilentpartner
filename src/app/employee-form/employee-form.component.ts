@@ -5,6 +5,7 @@ import { AppConfig } from '../config';
 import { ActivatedRoute } from '@angular/router';
 import * as $ from 'jquery';
 import { FormioAuthService } from 'angular-formio/auth';
+import { Formio } from 'formiojs';
 
 @Component({
     selector: 'app-employee-form',
@@ -17,15 +18,38 @@ export class EmployeeFormComponent implements OnInit {
     public appConfig = AppConfig;
     loading: boolean = false;
     formPath: any;
+    formio: any;
+    public form: any;
+    currentUser: any;
 
-    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private auth: FormioAuthService) { }
+    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private auth: FormioAuthService) {
+        this.activatedRoute.queryParams.subscribe(params => {
+            this.formPath = params['formPath'];
+            this.formio = new Formio(this.appConfig.appUrl + '/' + this.formPath);
+        });
+    }
 
     ngOnInit() {
+        this.formio.loadForm().then(form => (this.form = form));
         this.auth.ready.then(() => {
+            this.currentUser = Formio.currentUser();
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
-            this.activatedRoute.queryParams.subscribe(params => {
-                this.formPath = params['formPath'];
-            });
+        });
+    }
+
+    // onSubmit(event) {
+    //     const eventI = event;
+    //     eventI.data.employeeId = Formio.currentUser().__zone_symbol__value._id;
+    //     this.formio.saveSubmission(eventI).then(function (created) {
+    //         console.log("Hello5 :: ", created);
+    //     });
+    // }
+
+    onSubmit(event) {
+        const eventI = event;
+        eventI.data.employeeId = Formio.currentUser().__zone_symbol__value;
+        this.formio.saveSubmission(eventI).then(function (created) {
+           console.log("Hello5 :: ", created);
         });
     }
 

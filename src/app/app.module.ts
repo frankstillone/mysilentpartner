@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { AppConfig } from './config';
 import { FormioAppConfig, FormioModule } from 'angular-formio';
 import { FormioAuthService, FormioAuthConfig } from 'angular-formio/auth';
-import { FormioResources } from 'angular-formio/resource';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormioResources } from 'angular-formio/resource';
+import { FormioGrid } from 'angular-formio/grid';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
@@ -49,7 +51,7 @@ import { EmployeeFormModule } from './employee-form/employee-form.module';
         FormioModule,
         FormsModule,
         ReactiveFormsModule,
-        EmployeeFormModule
+        FormioGrid
     ],
     providers: [
         FormioAuthService,
