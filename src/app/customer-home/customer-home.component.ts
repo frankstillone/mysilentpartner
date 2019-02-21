@@ -28,13 +28,10 @@ export class CustomerHomeComponent implements OnInit {
 
     updatePayment() {
         var headers = new Headers();
-        headers.append('accept', 'application/json;charset=utf-8');
-        headers.append('Content-Type', 'application/json;charset=utf-8');
-        headers.append('Authorization', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        //headers.append('authorization', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
         headers.append('X-Auth-Token', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Credentials', 'true');
-        headers.append("Cache-Control", "max-age=0");
         let options = new RequestOptions({ headers: headers });
         // let formData = {
         //     "user.userId": "10731",
