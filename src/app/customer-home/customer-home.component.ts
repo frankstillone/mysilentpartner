@@ -22,7 +22,7 @@ export class CustomerHomeComponent implements OnInit {
         this.auth.ready.then(() => {
             this.showCustomerScreen = this.authService.showCustomerScreen;
             this.getAllAccountDetails();
-            this.updatePayment();
+            //this.updatePayment();
         });
     }
 

@@ -14,7 +14,7 @@ import { UpdatePaymentComponent } from './update-payment/update-payment.componen
 import { CustomerResetPasswordComponent } from './customer-reset-password/customer-reset-password.component';
 import { EmployeeResetPasswordComponent } from './employee-reset-password/employee-reset-password.component';
 import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-password/submit-employee-reset-password.component';
-import { EmployeeFormModule } from './employee-form/employee-form.module';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
     {
@@ -24,7 +24,7 @@ const routes: Routes = [
     },
     {
         path: 'auth',
-        loadChildren: './auth/auth.module#AuthModule'
+        component: LoginComponent
     },
     {
         path: 'adminHome',
@@ -53,7 +53,6 @@ const routes: Routes = [
     {
         path: 'employeeForm',
         component: EmployeeFormComponent,
-        loadChildren: () => EmployeeFormModule
     },
     {
         path: 'customerResetPassword',

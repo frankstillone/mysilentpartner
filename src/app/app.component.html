@@ -21,6 +21,36 @@
         </div>
     </div>
 </nav>
+<div *ngIf="!auth.authenticated">
+    <div class="container">
+        <div *ngIf="adminLogin">
+            <formio src="https://bkvvieybeanbxoh.form.io/adminlogin" (submit)="onSubmit($event)"></formio>
+        </div>
+        <div *ngIf="customerLogin">
+            <formio src="https://bkvvieybeanbxoh.form.io/customerlogin" (submit)="onSubmit($event)">
+            </formio>
+        </div>
+        <div *ngIf="employeeLogin">
+            <formio src="https://bkvvieybeanbxoh.form.io/employeelogin" (submit)="onSubmit($event)">
+            </formio>
+        </div>
+        <div class="container">
+            <hr>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <div class="nav-link nav-link-custom" (click)="changeLoginView('customer')">Customer Login</div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link nav-link-custom" (click)="changeLoginView('employee')">Employee Login</div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link nav-link-custom" (click)="changeLoginView('admin')">Admin Login</div>
+                </li>
+            </ul>
+            <hr>
+        </div>
+    </div>
+</div>
 <div class="container">
     <router-outlet></router-outlet>
 </div>

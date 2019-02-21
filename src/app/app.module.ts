@@ -24,7 +24,7 @@ import { UpdatePaymentComponent } from './update-payment/update-payment.componen
 import { CustomerResetPasswordComponent } from './customer-reset-password/customer-reset-password.component';
 import { EmployeeResetPasswordComponent } from './employee-reset-password/employee-reset-password.component';
 import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-password/submit-employee-reset-password.component';
-import { EmployeeFormModule } from './employee-form/employee-form.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +42,8 @@ import { EmployeeFormModule } from './employee-form/employee-form.module';
         UpdatePaymentComponent,
         CustomerResetPasswordComponent,
         EmployeeResetPasswordComponent,
-        SubmitEmployeeResetPasswordComponent
+        SubmitEmployeeResetPasswordComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -61,12 +62,7 @@ import { EmployeeFormModule } from './employee-form/employee-form.module';
         },
         {
             provide: FormioAuthConfig, useValue: {
-                login: {
-                    form: 'user/login'
-                },
-                register: {
-                    form: 'user/register'
-                }
+
             }
         }
     ],
