@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { AppConfig } from '../config';
 import { ActivatedRoute } from '@angular/router';
-import * as $ from 'jquery';
 import { FormioAuthService } from 'angular-formio/auth';
 import { Formio } from 'formiojs';
 
@@ -36,14 +35,6 @@ export class EmployeeFormComponent implements OnInit {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
         });
     }
-
-    // onSubmit(event) {
-    //     const eventI = event;
-    //     eventI.data.employeeId = Formio.currentUser().__zone_symbol__value._id;
-    //     this.formio.saveSubmission(eventI).then(function (created) {
-    //         console.log("Hello5 :: ", created);
-    //     });
-    // }
 
     onSubmit(event) {
         const eventI = event;
