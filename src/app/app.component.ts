@@ -30,11 +30,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.auth.ready.then(() => {
-            this.authService.setGlobalRole(this.auth.is);
-        });
-        this.authService.setRoleId(null);
-        this.authService.setUserName(null);
+        this.navigator();
     }
 
     onSubmit(event) {
@@ -57,6 +53,9 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['customerHome']);
             }
         });
+        if(!this.auth.authenticated) {
+            this.router.navigate(['']);
+        }
     }
 
     changeLoginView(changeViewTo) {
