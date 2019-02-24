@@ -160,7 +160,6 @@ tr th {
     }
 }
 //LOADER - END
-
 .justify-content-center {
     border-right: 1px solid #ddd;
 }
@@ -180,4 +179,14 @@ tr th {
 }
 hr {
     border-top: 1px solid #ddd !important;
+}
+// formio-alerts {
+//     display: none !important;
+// }
+.link {
+    color: blue !important;
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline !important;
 }

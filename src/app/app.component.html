@@ -1,12 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 10px;">
     <div class="container">
-        <a class="navbar-brand" href="#"><img height="25px;" src="https://portal.form.io/images/formio-logo.png">
+        <a class="navbar-brand" href="#">
+            <!-- <img height="25px;" src="https://portal.form.io/images/formio-logo.png"> -->
             My Silent Partner
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="home-navigator">
+            <div *ngIf="auth.is.customer" routerLink="customerHome"><i class="fa fa-home fa-2x"></i></div>
+            <div *ngIf="auth.is.employee" routerLink="employeeHome"><i class="fa fa-home fa-2x"></i></div>
+            <div *ngIf="auth.is.adminl1" routerLink="adminHome"><i class="fa fa-home fa-2x"></i></div>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
             </ul>
@@ -21,19 +27,77 @@
         </div>
     </div>
 </nav>
+
+<div class="container">
+    <div class="alert alert-success" *ngIf="showAlertBox">
+        {{alertMessage}}
+    </div>
+</div>
+
 <div *ngIf="!auth.authenticated">
     <div class="container">
         <div *ngIf="adminLogin">
             <formio src="https://bkvvieybeanbxoh.form.io/adminlogin" (submit)="onSubmit($event)"></formio>
+            <div class="row">
+                <div class="col col-sm-6 col-sm-offset-0 col-sm-push-0 col-sm-pull-0">
+                    <div class="form-group">
+                        <div class="link" (click)="changeLoginView('adminResetPassword')">Forgot Password</div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div *ngIf="customerLogin">
             <formio src="https://bkvvieybeanbxoh.form.io/customerlogin" (submit)="onSubmit($event)">
             </formio>
+            <div class="row">
+                <div class="col col-sm-6 col-sm-offset-0 col-sm-push-0 col-sm-pull-0">
+                    <div class="form-group">
+                        <span class="link" (click)="changeLoginView('customerResetPassword')">Forgot Password</span>
+                    </div>
+                </div>
+                <div class="col col-sm-6 col-sm-offset-0 col-sm-push-0 col-sm-pull-0">
+                    <div class="form-group">
+                        Don't have an Account? Click <span class="link"
+                            (click)="changeLoginView('customerRegistration')">here</span>
+                        to create your Customer Account.
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div *ngIf="employeeLogin">
             <formio src="https://bkvvieybeanbxoh.form.io/employeelogin" (submit)="onSubmit($event)">
             </formio>
+            <div class="row">
+                <div class="col col-sm-6 col-sm-offset-0 col-sm-push-0 col-sm-pull-0">
+                    <div class="form-group">
+                        <div class="link" (click)="changeLoginView('employeeResetPassword')">Forgot Password</div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div *ngIf="customerRegistration">
+            <formio src="https://bkvvieybeanbxoh.form.io/user/register" (submit)="showMessage('customerRegistration')">
+            </formio>
+        </div>
+
+        <div *ngIf="customerResetPassword">
+            <formio src="https://bkvvieybeanbxoh.form.io/sendcustomerresetpassword"
+                (submit)="showMessage('customerResetPassword')"></formio>
+        </div>
+
+        <div *ngIf="employeeResetPassword">
+            <formio src="https://bkvvieybeanbxoh.form.io/sendemployeeresetpassword"
+                (submit)="showMessage('employeeResetPassword')"></formio>
+        </div>
+
+        <div *ngIf="adminResetPassword">
+            <formio src="https://bkvvieybeanbxoh.form.io/sendadminresetpassword"
+                (submit)="showMessage('adminResetPassword')"></formio>
+        </div>
+
         <div class="container">
             <hr>
             <ul class="nav justify-content-center">

@@ -1,49 +1,12 @@
-<formio src="https://bkvvieybeanbxoh.form.io/accountpayment"></formio>
-
-<!-- <form [formGroup]="paymentInformationForm" (ngSubmit)="submit()" autocomplete="off">
-    <div class="form-group">
-        <label for="sel1">Payment Method</label>
-        <select (change)="onChange($event.target.value)" class="form-control" id="sel1" formControlName="paymentMethod">
-            <option disabled selected value> -- select an option -- </option>
-            <option value="directDebit">Direct Debit</option>
-            <option value="visa/master">Visa/Master</option>
-        </select>
+<div *ngIf="showPaymentScreen">
+    <div class="alert alert-danger" *ngIf="showAlertBox">
+        {{alertMessage}}
     </div>
-    <div *ngIf="cardType">
-        <div class="form-group">
-            <label>Card Number</label>
-            <input type="text" class="form-control" formControlName="cardNumber">
-        </div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Expiry Month</label>
-                    <input type="text" class="form-control" formControlName="month">
-                </div>
-                <div class="col-md-6">
-                    <label>Expiry Year</label>
-                    <input type="text" class="form-control" formControlName="year">
-                </div>
-            </div>
-        </div>
+    <div class="alert alert-success" *ngIf="showSuccessAlertBox">
+        {{alertMessage}}
     </div>
-    <div *ngIf="directDebitType">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>Bank Name</label>
-                    <input type="text" class="form-control" formControlName="bankName">
-                </div>
-                <div class="col-md-6">
-                    <label>Account Number</label>
-                    <input type="text" class="form-control" formControlName="accountNumber">
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label>BSB</label>
-            <input type="text" class="form-control" formControlName="bsb">
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form> -->
+    <p></p>
+    <p></p>
+    <formio *ngIf="form" [form]="form" (submit)="onSubmit($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

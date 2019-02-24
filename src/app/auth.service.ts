@@ -13,6 +13,7 @@ export class AuthService {
     showOperatorScreen: any = false;
     userName: any;
     localRoleId: any;
+    firstAndLastName: any;
 
     constructor() { }
 
@@ -60,6 +61,17 @@ export class AuthService {
 
     getUserName() {
         return this.userName;
+    }
+
+    setFirstAndLastName() {
+        this.firstAndLastName = JSON.parse(localStorage.getItem("formioAppUser"));
+        if(this.firstAndLastName) {
+            this.firstAndLastName = this.firstAndLastName.data.firstName;
+        }
+    }
+
+    getFirstAndLastName() {
+        return this.firstAndLastName;
     }
 
     destroyRoles() {

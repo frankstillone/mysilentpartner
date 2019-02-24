@@ -17,6 +17,12 @@ export class AppComponent implements OnInit {
     customerLogin: boolean = true;
     employeeLogin: boolean = false;
     adminLogin: boolean = false;
+    customerRegistration: boolean = false;
+    customerResetPassword: boolean = false;
+    employeeResetPassword: boolean = false;
+    adminResetPassword: boolean = false;
+    showAlertBox = false;
+    alertMessage: any;
 
     constructor(public auth: FormioAuthService, public router: Router, private http: Http, private authService: AuthService) {
         this.auth.onLogin.subscribe(() => {
@@ -30,7 +36,15 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.navigator();
+        this.auth.ready.then(() => {
+            if (!this.auth.authenticated) {
+                this.router.navigate(['']);
+            }
+            this.authService.setGlobalRole(this.auth.is);
+            this.authService.setUserName(null);
+            this.authService.setRoleId(null);
+            this.authService.setFirstAndLastName();
+        });
     }
 
     onSubmit(event) {
@@ -38,12 +52,30 @@ export class AppComponent implements OnInit {
         this.navigator();
     }
 
+    showMessage(showMessageFor) {
+        this.customerLogin = false;
+        this.employeeLogin = false;
+        this.adminLogin = false;
+        this.customerRegistration = false;
+        this.customerResetPassword = false;
+        this.employeeResetPassword = false;
+        this.adminResetPassword = false;
+        if (showMessageFor === 'customerRegistration') {
+            this.showAlertBox = true;
+            this.alertMessage = "Thank you for the registration. We have sent an email to the given email address. Please check your inbox to set your password.";
+        } else if (showMessageFor === 'customerResetPassword' || showMessageFor === 'employeeResetPassword' || showMessageFor === 'adminResetPassword') {
+            this.showAlertBox = true;
+            this.alertMessage = "Thank you. Please check your inbox to reset your password.";
+        }
+    }
+
     navigator(): void {
         this.auth.ready.then(() => {
             this.authService.setGlobalRole(this.auth.is);
             this.authService.setUserName(null);
             this.authService.setRoleId(null);
-            if (this.auth.is.administrator) {
+            this.authService.setFirstAndLastName();
+            if (this.auth.is.adminl1) {
                 this.router.navigate(['adminHome']);
             } else if (this.auth.is.employee) {
                 this.router.navigate(['employeeHome']);
@@ -53,25 +85,38 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['customerHome']);
             }
         });
-        if(!this.auth.authenticated) {
+        if (!this.auth.authenticated) {
             this.router.navigate(['']);
         }
     }
 
     changeLoginView(changeViewTo) {
         if (!this.auth.authenticated) {
+
+            this.customerLogin = false;
+            this.employeeLogin = false;
+            this.adminLogin = false;
+            this.customerRegistration = false;
+            this.customerResetPassword = false;
+            this.employeeResetPassword = false;
+            this.adminResetPassword = false;
+            this.showAlertBox = false;
+            this.alertMessage = "";
+
             if (changeViewTo === 'customer') {
                 this.customerLogin = true;
-                this.employeeLogin = false;
-                this.adminLogin = false;
             } else if (changeViewTo === 'employee') {
                 this.employeeLogin = true;
-                this.customerLogin = false;
-                this.adminLogin = false;
             } else if (changeViewTo === 'admin') {
                 this.adminLogin = true;
-                this.customerLogin = false;
-                this.employeeLogin = false;
+            } else if (changeViewTo === 'customerRegistration') {
+                this.customerRegistration = true;
+            } else if (changeViewTo === 'customerResetPassword') {
+                this.customerResetPassword = true;
+            } else if (changeViewTo === 'employeeResetPassword') {
+                this.employeeResetPassword = true;
+            } else if (changeViewTo === 'adminResetPassword') {
+                this.adminResetPassword = true;
             }
         }
     }

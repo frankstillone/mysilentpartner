@@ -25,7 +25,7 @@ export class CustomerServicesComponent implements OnInit {
     paymentInformation: any;
     cardType: boolean = false;
     directDebitType: boolean = false;
-    expiredType:boolean = false;
+    expiredType: boolean = false;
     noPaymentMethod: boolean = false;
     emailProcessingServices: any;
     liveChatServices: any;
@@ -72,11 +72,11 @@ export class CustomerServicesComponent implements OnInit {
     }
 
     newPayment() {
-        this.router.navigate(['payment'], {queryParams: {service: this.accountId }});
+        this.router.navigate(['payment'], { queryParams: { account: this.accountId } });
     }
 
     updatePayment(paymentId) {
-        this.router.navigate(['updatePayment'], {queryParams: {service: this.accountId, id: paymentId }});
+        this.router.navigate(['updatePayment'], { queryParams: { account: this.accountId, id: paymentId } });
     }
 
     getPayment() {
@@ -84,15 +84,19 @@ export class CustomerServicesComponent implements OnInit {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/accountpaymentinformation/submission?data.accountId=' + this.accountId, options).subscribe((res: any) => {
+        this.http.get(this.appConfig.appUrl + '/accountpaymentinformation/submission?data.account._id=' + this.accountId, options).subscribe((res: any) => {
             let respon = res.json();
-            this.paymentInformation = respon[0];
-            if(this.paymentInformation) {
-                if(respon[0].data.paymentType === "Visa/Master Card") {
+            if (respon[0]) {
+                this.paymentInformation = respon[0];
+                if (respon[0].data.paymentType === "Credit Card") {
+                    let month = respon[0].data.day.substr(0, respon[0].data.day.indexOf('/'));
+                    var parts = respon[0].data.day.split("/");
+                    let year = parts[parts.length - 1];
+                    this.paymentInformation.data.day = month + '/' + year;
                     this.cardType = true;
-                } else if(respon[0].data.paymentType === "Direct Debit") {
+                } else if (respon[0].data.paymentType === "Direct Debit") {
                     this.directDebitType = true;
-                } else if(respon[0].data.paymentType === "expired") {
+                } else if (respon[0].data.paymentType === "expired") {
                     this.expiredType = true;
                 } else {
                     this.noPaymentMethod = true;
