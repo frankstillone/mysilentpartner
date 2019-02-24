@@ -6,11 +6,11 @@ import { FormioAuthService } from 'angular-formio/auth';
 import { AuthService } from '../auth.service';
 
 @Component({
-    selector: 'app-submit-reset-password',
-    templateUrl: './submit-reset-password.component.html',
-    styleUrls: ['./submit-reset-password.component.scss']
+    selector: 'app-submit-customer-reset-password',
+    templateUrl: './submit-customer-reset-password.component.html',
+    styleUrls: ['./submit-customer-reset-password.component.scss']
 })
-export class SubmitResetPasswordComponent implements OnInit {
+export class SubmitCustomerResetPasswordComponent implements OnInit {
 
     public appConfig = AppConfig;
     resetPasswordForm: any;
@@ -18,9 +18,9 @@ export class SubmitResetPasswordComponent implements OnInit {
     public form: any;
 
     constructor(public auth: FormioAuthService, private router: Router, private authService: AuthService) {
-        this.formio = new Formio(this.appConfig.appUrl + '/customerresetform');
+        this.formio = new Formio(this.appConfig.appUrl + '/customerresetpassword');
     }
-    
+
     ngOnInit() {
         this.formio.loadForm().then(form => (this.form = form));
     }

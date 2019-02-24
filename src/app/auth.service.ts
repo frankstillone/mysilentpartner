@@ -13,6 +13,7 @@ export class AuthService {
     showOperatorScreen: any = false;
     userName: any;
     localRoleId: any;
+    firstAndLastName: any;
 
     constructor() { }
 
@@ -30,7 +31,7 @@ export class AuthService {
 
     setRoleId(localRoleId: any) {
         if(!localRoleId) {
-            this.localRoleId = JSON.parse(localStorage.getItem("formioUser"));
+            this.localRoleId = JSON.parse(localStorage.getItem("formioAppUser"));
             if(this.localRoleId) {
                 this.localRoleId = this.localRoleId.roles[0];
             }
@@ -49,7 +50,7 @@ export class AuthService {
 
     setUserName(userName: any) {
         if(!userName) {
-            this.userName = JSON.parse(localStorage.getItem("formioUser"));
+            this.userName = JSON.parse(localStorage.getItem("formioAppUser"));
             if(this.userName) {
                 this.userName = this.userName.data.userName;
             }
@@ -60,6 +61,17 @@ export class AuthService {
 
     getUserName() {
         return this.userName;
+    }
+
+    setFirstAndLastName() {
+        this.firstAndLastName = JSON.parse(localStorage.getItem("formioAppUser"));
+        if(this.firstAndLastName) {
+            this.firstAndLastName = this.firstAndLastName.data.firstName;
+        }
+    }
+
+    getFirstAndLastName() {
+        return this.firstAndLastName;
     }
 
     destroyRoles() {

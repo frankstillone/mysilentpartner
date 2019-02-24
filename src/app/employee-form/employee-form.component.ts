@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Http } from '@angular/http';
 import { AppConfig } from '../config';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
 import { Formio } from 'formiojs';
 
@@ -21,7 +21,7 @@ export class EmployeeFormComponent implements OnInit {
     public form: any;
     currentUser: any;
 
-    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private auth: FormioAuthService) {
+    constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private auth: FormioAuthService, private router: Router) {
         this.activatedRoute.queryParams.subscribe(params => {
             this.formPath = params['formPath'];
             this.formio = new Formio(this.appConfig.appUrl + '/' + this.formPath);
@@ -37,10 +37,12 @@ export class EmployeeFormComponent implements OnInit {
     }
 
     onSubmit(event) {
+        this.loading = true;
         const eventI = event;
         eventI.data.employeeId = Formio.currentUser().__zone_symbol__value;
-        this.formio.saveSubmission(eventI).then(function (created) {
-           console.log("Hello5 :: ", created);
+        this.formio.saveSubmission(eventI).then((created) => {
+           this.loading = false;
+           this.router.navigate(['employeeHome'], { });
         });
     }
 

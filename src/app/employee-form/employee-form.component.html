@@ -1,2 +1,4 @@
-<!-- <formio src="https://bkvvieybeanbxoh.form.io/{{formPath}}" (submit)="onSubmit($event)"></formio> -->
-<formio *ngIf="form" [form]="form" (submit)="onSubmit($event)"></formio>
+<div *ngIf="showEmployeeScreen">
+    <formio *ngIf="form" [form]="form" (submit)="onSubmit($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

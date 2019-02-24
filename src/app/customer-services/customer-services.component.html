@@ -71,7 +71,8 @@
                     <a class="nav-link" data-toggle="tab" href="#principalContact">Principal Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" (click)="getPayment()" href="#paymentInformation">Payment Information</a>
+                    <a class="nav-link" data-toggle="tab" (click)="getPayment()" href="#paymentInformation">Payment
+                        Information</a>
                 </li>
             </ul>
             <p></p>
@@ -205,10 +206,11 @@
                         <table class="table table-condensed table-bordered">
                             <thead class="thead-light">
                                 <th>Payment By AMEX/Visa/MasterCard</th>
-                                <th>{{paymentInformation.data.cardNumber}}</th>
-                                <th>{{paymentInformation.data.day}}</th>
+                                <th>**** ***** {{paymentInformation?.data?.panel2CardNumber}}</th>
+                                <th>{{paymentInformation?.data?.day}}</th>
                                 <th>Active</th>
-                                <th (click)="updatePayment(paymentInformation._id)">Update/Change Payment Authorisation</th>
+                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment Authorisation
+                                </th>
                             </thead>
                         </table>
                     </div>
@@ -219,10 +221,11 @@
                                 <th>
                                     {{paymentInformation.data.bankName}}<br>
                                     BSB: {{paymentInformation.data.bsb}}<br>
-                                    Account No: {{paymentInformation.data.accountNumber2}}
+                                    Account No: {{paymentInformation.data.panelAccountNumber}}
                                 </th>
                                 <th>Active</th>
-                                <th (click)="updatePayment(paymentInformation._id)">Update/Change Payment Authorisation</th>
+                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment Authorisation
+                                </th>
                             </thead>
                         </table>
                     </div>

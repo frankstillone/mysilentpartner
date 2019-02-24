@@ -22,40 +22,6 @@ export class CustomerHomeComponent implements OnInit {
         this.auth.ready.then(() => {
             this.showCustomerScreen = this.authService.showCustomerScreen;
             this.getAllAccountDetails();
-            this.updatePayment();
-        });
-    }
-
-    updatePayment() {
-        var headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        //headers.append('authorization', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
-        headers.append('X-Auth-Token', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
-        let options = new RequestOptions({ headers: headers });
-        // let formData = {
-        //     "user.userId": "10731",
-        //     "mainSubscription.periodId": "2",
-        //     "user.entityId": "1",
-        //     "user.userName": "Mayur Mamoria",
-        //     "metaField_19.value": "test1@test.com",
-        //     "mainSubscription.nextInvoiceDayOfPeriod": "1",
-        //     "user.accountTypeId": "1",
-        //     "user.nextInvoiceDate": "03/01/2019",
-        //     "paymentMethod_0.paymentMethodTypeId": "5",
-        //     "paymentMethod_0.processingOrder": "1",
-        //     "0_metaField_114.value": "TestCustomer",
-        //     "0_metaField_115.value": "4111111111111152",
-        //     "0_metaField_116.value": "12/2020",
-        //     "modelIndex": "0",
-        //     "paymentMethod_0.id": "",
-        //     "paymentMethod_0.paymentMethodId": "",
-        //     "currentIndex": "0"
-        // }
-
-        this.http.get('https://simplebilling.in:8443/customer/10731', options).subscribe((res: any) => {
-            console.log(res);
-            console.log(res.json());
         });
     }
 

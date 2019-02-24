@@ -15,17 +15,19 @@ export class EmployeeHomeComponent implements OnInit {
     public appConfig = AppConfig;
     loading: boolean = false;
     availableForms: any;
+    firstAndLastName: any;
 
     constructor(private authService: AuthService, private http: Http, private auth: FormioAuthService) { }
 
     ngOnInit() {
         this.auth.ready.then(() => {
             this.showEmployeeScreen = this.authService.showEmployeeScreen;
-            this.getAccountDetails();
+            this.firstAndLastName = this.authService.getFirstAndLastName();
+            this.getEmployeeDetails();
         });
     }
 
-    getAccountDetails(): void {
+    getEmployeeDetails(): void {
         this.loading = true;
         var headers = new Headers();
         headers.append("x-jwt-token", this.authService.getJwtToken());

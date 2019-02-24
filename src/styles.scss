@@ -160,3 +160,33 @@ tr th {
     }
 }
 //LOADER - END
+.justify-content-center {
+    border-right: 1px solid #ddd;
+}
+.justify-content-center {
+    border-left: 1px solid #ddd;
+}
+.nav-link-custom {
+    font-size: 17px;
+    color: #868686;
+    padding: 22px 40px !important;
+    cursor: pointer;
+}
+
+.nav-link-custom:hover {
+    background: #ebebeb;
+    color: #000;
+}
+hr {
+    border-top: 1px solid #ddd !important;
+}
+// formio-alerts {
+//     display: none !important;
+// }
+.link {
+    color: blue !important;
+    cursor: pointer;
+}
+.link:hover {
+    text-decoration: underline !important;
+}

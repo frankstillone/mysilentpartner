@@ -17,14 +17,12 @@ import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerServicesComponent } from './customer-services/customer-services.component';
 import { CreateCustomerAccountComponent } from './create-customer-account/create-customer-account.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SubmitResetPasswordComponent } from './submit-reset-password/submit-reset-password.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
-import { CustomerResetPasswordComponent } from './customer-reset-password/customer-reset-password.component';
-import { EmployeeResetPasswordComponent } from './employee-reset-password/employee-reset-password.component';
 import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-password/submit-employee-reset-password.component';
-import { EmployeeFormModule } from './employee-form/employee-form.module';
+import { SubmitCustomerResetPasswordComponent } from './submit-customer-reset-password/submit-customer-reset-password.component';
+import { LoginComponent } from './login/login.component';
+import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
 
 @NgModule({
     declarations: [
@@ -36,13 +34,12 @@ import { EmployeeFormModule } from './employee-form/employee-form.module';
         CustomerServicesComponent,
         CreateCustomerAccountComponent,
         EmployeeFormComponent,
-        ResetPasswordComponent,
-        SubmitResetPasswordComponent,
         NewPaymentComponent,
         UpdatePaymentComponent,
-        CustomerResetPasswordComponent,
-        EmployeeResetPasswordComponent,
-        SubmitEmployeeResetPasswordComponent
+        SubmitEmployeeResetPasswordComponent,
+        SubmitCustomerResetPasswordComponent,
+        LoginComponent,
+        SubmitAdminResetPasswordComponent,
     ],
     imports: [
         BrowserModule,
@@ -61,12 +58,7 @@ import { EmployeeFormModule } from './employee-form/employee-form.module';
         },
         {
             provide: FormioAuthConfig, useValue: {
-                login: {
-                    form: 'user/login'
-                },
-                register: {
-                    form: 'user/register'
-                }
+
             }
         }
     ],

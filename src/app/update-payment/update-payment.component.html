@@ -1,1 +1,12 @@
-<formio src="https://bkvvieybeanbxoh.form.io/accountpayment" (submit)="onSubmit($event)"></formio>
+<div *ngIf="showPaymentScreen">
+    <div class="alert alert-danger" *ngIf="showAlertBox">
+        {{alertMessage}}
+    </div>
+    <div class="alert alert-success" *ngIf="showSuccessAlertBox">
+        {{alertMessage}}
+    </div>
+    <p></p>
+    <p></p>
+    <formio *ngIf="form" [form]="form" (submit)="onSubmit($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>
