@@ -15,7 +15,6 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { OperatorHomeComponent } from './operator-home/operator-home.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { CustomerServicesComponent } from './customer-services/customer-services.component';
-import { CreateCustomerAccountComponent } from './create-customer-account/create-customer-account.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
@@ -24,6 +23,7 @@ import { SubmitCustomerResetPasswordComponent } from './submit-customer-reset-pa
 import { LoginComponent } from './login/login.component';
 import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
+import { CreateUpdateCustomerAccountComponent } from './create-update-customer-account/create-update-customer-account.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +33,6 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
         OperatorHomeComponent,
         CustomerHomeComponent,
         CustomerServicesComponent,
-        CreateCustomerAccountComponent,
         EmployeeFormComponent,
         NewPaymentComponent,
         UpdatePaymentComponent,
@@ -42,6 +41,7 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
         LoginComponent,
         SubmitAdminResetPasswordComponent,
         CreateCustomerComponent,
+        CreateUpdateCustomerAccountComponent,
     ],
     imports: [
         BrowserModule,

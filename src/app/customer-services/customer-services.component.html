@@ -98,6 +98,7 @@
                             <td>{{accountDetails?.tradingName}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']" [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="registeredOffice">
                     <table class="table table-condensed table-bordered">

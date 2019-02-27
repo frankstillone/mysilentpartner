@@ -2,14 +2,14 @@
     <div *ngIf="allAccounts.length > 0">
         <p>Your Accounts</p>
         <div class="" *ngFor="let account of allAccounts">
-            <a [routerLink]="['../customerServices']" [queryParams]="{accountId: account._id}">{{account.data.tradingName}}</a>
+            <a [routerLink]="['../customerServices']" [queryParams]="{accountId: account._id}">{{account.data.accountName}}</a>
         </div>
         <p></p>
     </div>
 
     <div *ngIf="allAccounts.length == 0"><p>No Accounts yet.</p></div>
 
-    <div class="btn btn-primary" routerLink="/createCustomerAccount">Create Account</div>
+    <!-- <div class="btn btn-primary" routerLink="/createCustomerAccount">Create Account</div> -->
 
     <div *ngIf="loading" class="loading">Loading&#8230;</div>
 </div>

@@ -1,0 +1,4 @@
+<div *ngIf="showCustomerScreen">
+    <formio src="https://bkvvieybeanbxoh.form.io/account/submission/{{accountId}}" (submit)="onSubmit($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

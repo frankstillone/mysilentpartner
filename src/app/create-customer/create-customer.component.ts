@@ -36,7 +36,7 @@ export class CreateCustomerComponent implements OnInit {
             this.getAccount();
         });
     }
-    
+
     getAccount() {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -49,7 +49,6 @@ export class CreateCustomerComponent implements OnInit {
     }
 
     createCustomer(event) {
-
         this.loading = true;
         const submission = event;
         var createCustomer = new Formio(this.appConfig.appUrl + '/customer/submission');
