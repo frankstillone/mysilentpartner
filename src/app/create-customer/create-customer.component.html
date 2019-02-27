@@ -1,0 +1,6 @@
+<div *ngIf="showCustomerScreen">
+    <h2>Account Name : {{accountDetails?.data?.accountName}}</h2>
+    <p></p><br><br>
+    <formio *ngIf="form" [form]="form" (submit)="createCustomer($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

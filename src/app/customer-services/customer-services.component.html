@@ -1,4 +1,5 @@
 <div *ngIf="showCustomerScreen">
+    <p>Account Name : {{accountDetails?.accountName}}</p>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -49,6 +50,7 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">Create Customer</div>
         </div>
         <p></p>
         <p></p>
@@ -145,7 +147,7 @@
                         </tr>
                         <tr>
                             <th>Post Code</th>
-                            <td>accountDetails.placeBusinessPostcode</td>
+                            <td>{{accountDetails?.placeBusinessPostcode}}</td>
                         </tr>
                         <tr>
                             <th>Country</th>
@@ -177,7 +179,7 @@
                         </tr>
                         <tr>
                             <th>Secretary</th>
-                            <td>accountDetails.mainOfficeHolderSecretary</td>
+                            <td>{{accountDetails?.mainOfficeHolderSecretary}}</td>
                         </tr>
                     </table>
                 </div>

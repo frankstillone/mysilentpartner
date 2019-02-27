@@ -36,13 +36,13 @@
                 <thead class="thead-light">
                     <th></th>
                     <th>Form Name</th>
-                    <th>Action</th>
+                    <!-- <th>Action</th> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let availableForm of availableForms;let i = index">
+                    <tr *ngFor="let availableForm of availableForms;let i = index" [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}" style="cursor: pointer;">
                         <td>{{i+1}}</td>
                         <td>{{availableForm.title}}</td>
-                        <td><a [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}">Link</a></td>
+                        <!-- <td><a [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}">Link</a></td> -->
                     </tr>
                 </tbody>
             </table>

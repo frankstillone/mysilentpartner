@@ -1,3 +1,143 @@
-<p>
-  admin-home works!
-</p>
+<div *ngIf="showAdminScreen">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#employees">Employees</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#users">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#accounts">Accounts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#spare1">Spare</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#spare2">Spare</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <p></p>
+        <p></p>
+        <div class="tab-pane container active" id="dashboard">
+            <h2>Dashboard</h2>
+        </div>
+        
+        <div class="tab-pane container" id="employees">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>ID</th>
+                    <th>UserName</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Years Active</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>employee1</td>
+                        <td>Employee</td>
+                        <td>1</td>
+                        <td>employee@example.com</td>
+                        <td>01/01/2020</td>
+                        <td>01/01/2020</td>
+                        <td>Active</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane container fade" id="users">
+                <table class="table table-bordered table-condensed">
+                        <thead>
+                            <th>ID</th>
+                            <th>UserName</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email Address</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Years Active</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>customer1</td>
+                                <td>Customer</td>
+                                <td>1</td>
+                                <td>customer@example.com</td>
+                                <td>01/01/2020</td>
+                                <td>01/01/2020</td>
+                                <td>Active</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div>
+
+        <div class="tab-pane container fade" id="accounts">
+                <table class="table table-bordered table-condensed">
+                        <thead>
+                            <th>Account ID</th>
+                            <th>Account Name</th>
+                            <th>Linked Users</th>
+                            <th>Linked Services</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Marrypoppins Massage Therapy</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div>
+
+        <div class="tab-pane container fade" id="services">
+                <table class="table table-bordered table-condensed">
+                        <thead>
+                            <th>Service ID</th>
+                            <th>Service Type</th>
+                            <th>Service Name</th>
+                            <th>Status</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Marrypoppins Massage Therapy</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>Active</td>
+                            </tr>
+                        </tbody>
+                    </table>
+        </div>
+
+        <div class="tab-pane container fade" id="spare1">
+            <h2>Spare</h2>
+        </div>
+
+        <div class="tab-pane container fade" id="spare2">
+            <h2>Spare</h2>
+        </div>
+    </div>
+</div>
+<div *ngIf="loading" class="loading">Loading&#8230;</div>

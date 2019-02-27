@@ -37,7 +37,7 @@ export class CustomerHomeComponent implements OnInit {
             Object.keys(respon).forEach((key) => {
                 this.allAccounts.push(respon[key]);
             });
-            this.loading = false
+            this.loading = false;
         });
     }
 

@@ -34,7 +34,9 @@ export class SubmitAdminResetPasswordComponent implements OnInit {
         });
         this.authService.setUserName(null);
         admin.saveSubmission(this.auth.user).then(() => {
-            this.router.navigate(['/adminHome']);
+            this.auth.logout();
+            this.authService.destroyRoles();
+            this.router.navigate(['auth']);
         });
     }
 

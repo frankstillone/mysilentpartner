@@ -23,6 +23,7 @@ import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-pa
 import { SubmitCustomerResetPasswordComponent } from './submit-customer-reset-password/submit-customer-reset-password.component';
 import { LoginComponent } from './login/login.component';
 import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
+import { CreateCustomerComponent } from './create-customer/create-customer.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password
         SubmitCustomerResetPasswordComponent,
         LoginComponent,
         SubmitAdminResetPasswordComponent,
+        CreateCustomerComponent,
     ],
     imports: [
         BrowserModule,

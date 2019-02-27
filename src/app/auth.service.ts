@@ -18,7 +18,7 @@ export class AuthService {
     constructor() { }
 
     setGlobalRole(roleIs: any) {
-        if (roleIs.administrator) {
+        if (roleIs.adminl1) {
             this.showAdminScreen = true;
         } else if (roleIs.employee) {
             this.showEmployeeScreen = true;
