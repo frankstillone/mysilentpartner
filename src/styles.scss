@@ -167,10 +167,11 @@ tr th {
     border-left: 1px solid #ddd;
 }
 .nav-link-custom {
-    font-size: 17px;
+    font-size: 26px;
     color: #868686;
     padding: 22px 40px !important;
     cursor: pointer;
+    text-align: center;
 }
 
 .nav-link-custom:hover {
@@ -189,4 +190,12 @@ hr {
 }
 .link:hover {
     text-decoration: underline !important;
+}
+
+.custom-table {
+    border: 1px solid #ddd;
+    margin-top: 1rem;
+}
+.custom-table td {
+    border: unset !important;
 }
