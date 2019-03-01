@@ -69,7 +69,7 @@ export class CreateUpdateCustomerAccountComponent implements OnInit {
         eventI.data.userName = Formio.currentUser().__zone_symbol__value;
         this.newAccountFormio.saveSubmission(eventI).then((created) => {
             this.loading = false;
-            this.router.navigate(['customerServices'], { queryParams: { accountId: created._id } });
+            this.router.navigate(['payment'], { queryParams: { account: created._id } });
         });
     }
 
