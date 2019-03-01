@@ -1,4 +1,10 @@
 <div *ngIf="showCustomerScreen">
-    <formio src="https://bkvvieybeanbxoh.form.io/account/submission/{{accountId}}" (submit)="onSubmit($event)"></formio>
+    <div *ngIf="showEditMode">
+        <formio *ngIf="editAccountForm" [form]="editAccountForm" [submission]="accountDetails"
+            (submit)="updateAccount($event)"></formio>
+    </div>
+    <div *ngIf="!showEditMode">
+        <formio *ngIf="newAccountForm" [form]="newAccountForm" (submit)="saveAccount($event)"></formio>
+    </div>
     <div *ngIf="loading" class="loading">Loading&#8230;</div>
 </div>
