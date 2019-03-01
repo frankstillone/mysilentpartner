@@ -39,6 +39,7 @@ export class EmployeeFormComponent implements OnInit {
     onSubmit(event) {
         this.loading = true;
         const eventI = event;
+        eventI.data.empId = Formio.currentUser().__zone_symbol__value._id;
         eventI.data.employeeId = Formio.currentUser().__zone_symbol__value;
         this.formio.saveSubmission(eventI).then((created) => {
            this.loading = false;
