@@ -6,13 +6,13 @@
             <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#employees">Employees</a>
+            <a class="nav-link" data-toggle="tab" href="#employees" (click)="getEmployeesList()">Employees</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#users">Users</a>
+            <a class="nav-link" data-toggle="tab" href="#users" (click)="getCustomerList()">Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#accounts">Accounts</a>
+            <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList()">Accounts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#services">Services</a>
@@ -32,7 +32,7 @@
         <div class="tab-pane container active" id="dashboard">
             <h2>Dashboard</h2>
         </div>
-        
+
         <div class="tab-pane container" id="employees">
             <table class="table table-bordered table-condensed">
                 <thead>
@@ -47,12 +47,48 @@
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>employee1</td>
-                        <td>Employee</td>
-                        <td>1</td>
-                        <td>employee@example.com</td>
+                    <tr *ngFor="let employee of allEmployees">
+                        <td>{{ employee?._id }}</td>
+                        <td>{{ employee?.data?.userName }}</td>
+                        <td>{{ employee?.data?.firstName }}</td>
+                        <td>{{ employee?.data?.lastName }}</td>
+                        <td>{{ employee?.data?.email }}</td>
+                        <td>01/01/2020</td>
+                        <td>01/01/2020</td>
+                        <td>Active</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-pane container fade" id="users">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>ID</th>
+                    <th>UserName</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Years Active</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of allCustomers">
+                        <td>{{ customer?._id }}</td>
+                        <td>{{ customer?.data?.userName }}</td>
+                        <td>{{ customer?.data?.firstName }}</td>
+                        <td>{{ customer?.data?.lastName }}</td>
+                        <td>{{ customer?.data?.email }}</td>
                         <td>01/01/2020</td>
                         <td>01/01/2020</td>
                         <td>Active</td>
@@ -62,74 +98,45 @@
             </table>
         </div>
 
-        <div class="tab-pane container fade" id="users">
-                <table class="table table-bordered table-condensed">
-                        <thead>
-                            <th>ID</th>
-                            <th>UserName</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email Address</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Years Active</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>customer1</td>
-                                <td>Customer</td>
-                                <td>1</td>
-                                <td>customer@example.com</td>
-                                <td>01/01/2020</td>
-                                <td>01/01/2020</td>
-                                <td>Active</td>
-                                <td>Active</td>
-                            </tr>
-                        </tbody>
-                    </table>
-        </div>
-
         <div class="tab-pane container fade" id="accounts">
-                <table class="table table-bordered table-condensed">
-                        <thead>
-                            <th>Account ID</th>
-                            <th>Account Name</th>
-                            <th>Linked Users</th>
-                            <th>Linked Services</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Marrypoppins Massage Therapy</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>Active</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Account ID</th>
+                    <th>Account Name</th>
+                    <th>Linked Users</th>
+                    <th>Linked Services</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let account of allAccounts">
+                        <td>{{ account?.id }}</td>
+                        <td>{{ account?.accountName }}</td>
+                        <td>{{ account?.linkedUsers }}</td>
+                        <td>{{ account?.linkedServices }}</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="tab-pane container fade" id="services">
-                <table class="table table-bordered table-condensed">
-                        <thead>
-                            <th>Service ID</th>
-                            <th>Service Type</th>
-                            <th>Service Name</th>
-                            <th>Status</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Marrypoppins Massage Therapy</td>
-                                <td>4</td>
-                                <td>5</td>
-                                <td>Active</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            DUMMY DATA
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Service ID</th>
+                    <th>Service Type</th>
+                    <th>Service Name</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Email</td>
+                        <td>Marry Poppins Email</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="tab-pane container fade" id="spare1">
