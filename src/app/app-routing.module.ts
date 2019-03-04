@@ -5,7 +5,6 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
 import { CustomerHomeComponent } from './customer-home/customer-home.component';
 import { OperatorHomeComponent } from './operator-home/operator-home.component';
 import { CustomerServicesComponent } from './customer-services/customer-services.component';
-import { CreateCustomerAccountComponent } from './create-customer-account/create-customer-account.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { UpdatePaymentComponent } from './update-payment/update-payment.component';
@@ -13,6 +12,8 @@ import { SubmitEmployeeResetPasswordComponent } from './submit-employee-reset-pa
 import { SubmitCustomerResetPasswordComponent } from './submit-customer-reset-password/submit-customer-reset-password.component';
 import { LoginComponent } from './login/login.component';
 import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
+import { CreateCustomerComponent } from './create-customer/create-customer.component';
+import { CreateUpdateCustomerAccountComponent } from './create-update-customer-account/create-update-customer-account.component';
 
 const routes: Routes = [
     {
@@ -45,8 +46,12 @@ const routes: Routes = [
         component: CustomerServicesComponent
     },
     {
-        path: 'createCustomerAccount',
-        component: CreateCustomerAccountComponent
+        path: 'createOrUpdateCustomerAccount',
+        component: CreateUpdateCustomerAccountComponent
+    },
+    {
+        path: 'createCustomer',
+        component: CreateCustomerComponent
     },
     {
         path: 'employeeForm',

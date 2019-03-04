@@ -34,7 +34,9 @@ export class SubmitEmployeeResetPasswordComponent implements OnInit {
         });
         this.authService.setUserName(null);
         employee.saveSubmission(this.auth.user).then(() => {
-            this.router.navigate(['/employeeHome']);
+            this.auth.logout();
+            this.authService.destroyRoles();
+            this.router.navigate(['auth']);
         });
     }
 

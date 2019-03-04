@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
             this.authService.setUserName(null);
             this.authService.setRoleId(null);
             this.authService.setFirstAndLastName();
+            this.authService.setUserRoleType();
         });
     }
 

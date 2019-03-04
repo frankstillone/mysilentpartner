@@ -1,4 +1,5 @@
 <div *ngIf="showCustomerScreen">
+    <p>Account Name : {{accountDetails?.accountName}}</p>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -49,6 +50,7 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">Create Customer</div>
         </div>
         <p></p>
         <p></p>
@@ -80,12 +82,12 @@
                 <div class="tab-pane container active" id="accountDetails">
                     <table class="table table-condensed table-bordered">
                         <tr>
-                            <th>Account ID</th>
-                            <td>{{accountDetails?.accountNumber}}</td>
-                        </tr>
-                        <tr>
                             <th>Account Name</th>
                             <td>{{accountDetails?.accountName}}</td>
+                        </tr>
+                        <tr>
+                            <th>Company Name</th>
+                            <td>{{accountDetails?.companyName}}</td>
                         </tr>
                         <tr>
                             <th>ABN</th>
@@ -96,6 +98,7 @@
                             <td>{{accountDetails?.tradingName}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']" [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="registeredOffice">
                     <table class="table table-condensed table-bordered">
@@ -145,7 +148,7 @@
                         </tr>
                         <tr>
                             <th>Post Code</th>
-                            <td>accountDetails.placeBusinessPostcode</td>
+                            <td>{{accountDetails?.placeBusinessPostcode}}</td>
                         </tr>
                         <tr>
                             <th>Country</th>
@@ -177,7 +180,7 @@
                         </tr>
                         <tr>
                             <th>Secretary</th>
-                            <td>accountDetails.mainOfficeHolderSecretary</td>
+                            <td>{{accountDetails?.mainOfficeHolderSecretary}}</td>
                         </tr>
                     </table>
                 </div>

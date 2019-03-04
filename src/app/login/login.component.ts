@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
             this.authService.setUserName(null);
             this.authService.setRoleId(null);
             this.authService.setFirstAndLastName();
+            this.authService.setUserRoleType();
             if (this.auth.is.adminl1) {
                 this.router.navigate(['adminHome']);
             } else if (this.auth.is.employee) {

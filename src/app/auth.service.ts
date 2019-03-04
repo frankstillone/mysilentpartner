@@ -14,11 +14,12 @@ export class AuthService {
     userName: any;
     localRoleId: any;
     firstAndLastName: any;
+    userRoleType: any;
 
     constructor() { }
 
     setGlobalRole(roleIs: any) {
-        if (roleIs.administrator) {
+        if (roleIs.adminl1) {
             this.showAdminScreen = true;
         } else if (roleIs.employee) {
             this.showEmployeeScreen = true;
@@ -72,6 +73,17 @@ export class AuthService {
 
     getFirstAndLastName() {
         return this.firstAndLastName;
+    }
+
+    setUserRoleType() {
+        this.userRoleType = JSON.parse(localStorage.getItem("formioAppUser"));
+        if(this.userRoleType) {
+            this.userRoleType = this.userRoleType.data.roleType;
+        }
+    }
+
+    getUserRoleType() {
+        return this.userRoleType;
     }
 
     destroyRoles() {
