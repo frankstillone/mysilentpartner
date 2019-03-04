@@ -1,4 +1,5 @@
 <div *ngIf="showAdminScreen">
+    <p>Hello {{firstName}},</p>
     <h3 class="alert alert-secondary text-center">The Silent Partner Administration Portal</h3>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
@@ -6,10 +7,10 @@
             <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#employees" (click)="getEmployeesList()">Employees</a>
+            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1'" (click)="getEmployeesList()">Employees</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#users" (click)="getCustomerList()">Users</a>
+            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL2'" (click)="getCustomerList()">Users</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList()">Accounts</a>

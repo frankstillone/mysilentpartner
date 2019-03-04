@@ -15,6 +15,8 @@ export class AdminHomeComponent implements OnInit {
     loading: boolean = false;
     showAdminScreen: boolean = false;
     public appConfig = AppConfig;
+    public roleType: any;
+    public firstName: any;
     public allEmployees: any;
     public allCustomers: any;
     public allAccounts: any;
@@ -26,6 +28,9 @@ export class AdminHomeComponent implements OnInit {
     ngOnInit() {
         this.auth.ready.then(() => {
             this.showAdminScreen = this.authService.showAdminScreen;
+            this.firstName = this.authService.getFirstAndLastName();
+            this.authService.setUserRoleType();
+            this.roleType = this.authService.getUserRoleType();
         });
     }
 

@@ -14,6 +14,7 @@ export class AuthService {
     userName: any;
     localRoleId: any;
     firstAndLastName: any;
+    userRoleType: any;
 
     constructor() { }
 
@@ -72,6 +73,17 @@ export class AuthService {
 
     getFirstAndLastName() {
         return this.firstAndLastName;
+    }
+
+    setUserRoleType() {
+        this.userRoleType = JSON.parse(localStorage.getItem("formioAppUser"));
+        if(this.userRoleType) {
+            this.userRoleType = this.userRoleType.data.roleType;
+        }
+    }
+
+    getUserRoleType() {
+        return this.userRoleType;
     }
 
     destroyRoles() {
