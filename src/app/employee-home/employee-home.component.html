@@ -31,6 +31,13 @@
             A summary of completed training modules - a place holder only - for future
         </div>
         <div class="tab-pane container fade" id="availableForms">
+            <div class="row">
+                <div class="col-md-6">
+                    <label> Search by User Name : </label>
+                    <input type="text" class="form-control"
+                        (input)="showDataByPage('search', 0, 'employeeForms', $event.target.value)" />
+                </div>
+            </div>
             <p></p>
             <table class="table table-condensed table-hover table-bordered">
                 <thead class="thead-light">
@@ -39,7 +46,8 @@
                     <!-- <th>Action</th> -->
                 </thead>
                 <tbody>
-                    <tr *ngFor="let availableForm of availableForms;let i = index" [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}" style="cursor: pointer;">
+                    <tr *ngFor="let availableForm of availableForms;let i = index" [routerLink]="['../employeeForm']"
+                        [queryParams]="{formPath: availableForm.path}" style="cursor: pointer;">
                         <td>{{i+1}}</td>
                         <td>{{availableForm.title}}</td>
                         <!-- <td><a [routerLink]="['../employeeForm']" [queryParams]="{formPath: availableForm.path}">Link</a></td> -->
@@ -48,19 +56,20 @@
             </table>
             <ul class="pagination justify-content-center">
                 <li class="page-item" *ngIf="showFirst">
-                    <div class="page-link active" (click)="showDataByPage('first', 0, 'employeeForms')">First</div>
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'employeeForms', '')">First</div>
                 </li>
                 <li class="page-item" *ngIf="showPrevious">
-                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'employeeForms')">Previous</div>
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'employeeForms', '')">Previous
+                    </div>
                 </li>
                 <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
-                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'employeeForms')">{{i+1}}</div>
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'employeeForms', '')">{{i+1}}</div>
                 </li>
                 <li class="page-item" *ngIf="showNext">
-                    <div class="page-link active" (click)="showDataByPage('next', 10, 'employeeForms')">Next</div>
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'employeeForms', '')">Next</div>
                 </li>
                 <li class="page-item" *ngIf="showLast">
-                    <div class="page-link active" (click)="showDataByPage('last', 0, 'employeeForms')">Last</div>
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'employeeForms', '')">Last</div>
                 </li>
             </ul>
         </div>

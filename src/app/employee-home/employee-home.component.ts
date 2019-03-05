@@ -23,6 +23,7 @@ export class EmployeeHomeComponent implements OnInit {
     showNext: boolean = false;
     showFirst: boolean = false;
     showLast: boolean = false;
+    searchString: any = '';
 
     constructor(private authService: AuthService, private http: Http, private auth: FormioAuthService) { }
 
@@ -34,16 +35,18 @@ export class EmployeeHomeComponent implements OnInit {
         });
     }
 
-    getEmployeeForms(skipEntries, searchUserName, firstTime): void {
+    getEmployeeForms(skipEntries, searchQuery, firstTime): void {
         if (firstTime) {
             this.skipEntries = 0;
+            this.searchString = '';
         }
         this.loading = true;
         var headers = new Headers();
         headers.append("x-jwt-token", this.authService.getJwtToken());
         headers.append('Content-Type', 'application/json');
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/form?type=form&submissionAccess.roles=' + this.authService.getRoleId()+'&skip=' + skipEntries, options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&title__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/form?type=form&submissionAccess.roles=' + this.authService.getRoleId()+'&skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
             this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.availableForms = respon;
@@ -51,25 +54,28 @@ export class EmployeeHomeComponent implements OnInit {
         });
     }
 
-    showDataByPage(type, skipEntries: number, userType) {
+    showDataByPage(actionType, skipEntries: number, paginationFor, searchString) {
         skipEntries = Number(skipEntries);
-        if (this.skipEntries == 0 && type == 'next') {
+        if (actionType == 'search') {
+            this.searchString = searchString;
+        }
+        if (this.skipEntries == 0 && actionType == 'next') {
             this.skipEntries = 10;
-        } else if (this.skipEntries > 0 && type == 'next') {
+        } else if (this.skipEntries > 0 && actionType == 'next') {
             this.skipEntries = this.skipEntries + skipEntries;
-        } else if (this.skipEntries > 0 && type == 'previous') {
+        } else if (this.skipEntries > 0 && actionType == 'previous') {
             this.skipEntries = this.skipEntries - skipEntries;
-        } else if (type == 'first') {
+        } else if (actionType == 'first') {
             this.skipEntries = 0;
-        } else if (type == 'last') {
+        } else if (actionType == 'last') {
             //Emit last digit of total records and replaced with 0 to skip starting pages
             this.skipEntries = Number(this.totalRecords.slice(0, -1) + '0');
         } else {
             this.skipEntries = skipEntries;
         }
 
-        if (userType == "employeeForms") {
-            this.getEmployeeForms(this.skipEntries, '', false);
+        if (paginationFor == "employeeForms") {
+            this.getEmployeeForms(this.skipEntries, this.searchString, false);
         }
     }
 

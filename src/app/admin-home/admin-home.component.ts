@@ -24,6 +24,7 @@ export class AdminHomeComponent implements OnInit {
     showNext: boolean = false;
     showFirst: boolean = false;
     showLast: boolean = false;
+    searchString: any = '';
     public allEmployees: any;
     public allCustomers: any;
     public allAccounts: any;
@@ -45,16 +46,18 @@ export class AdminHomeComponent implements OnInit {
         this.getEmployeesList(0, event, false);
     }
 
-    getEmployeesList(skipEntries, searchUserName, firstTime) {
+    getEmployeesList(skipEntries, searchQuery, firstTime) {
         if (firstTime) {
             this.skipEntries = 0;
+            this.searchString = '';
         }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/employee/submission?skip=' + skipEntries, options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/employee/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
             this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allEmployees = respon;
@@ -62,16 +65,18 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
-    getCustomerList(skipEntries, searchUserName, firstTime) {
+    getCustomerList(skipEntries, searchQuery, firstTime) {
         if (firstTime) {
             this.skipEntries = 0;
+            this.searchString = '';
         }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/customer/submission?skip=' + skipEntries, options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/customer/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
             this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allCustomers = respon;
@@ -79,16 +84,18 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
-    getAccountList(skipEntries, searchUserName, firstTime) {
+    getAccountList(skipEntries, searchQuery, firstTime) {
         if (firstTime) {
             this.skipEntries = 0;
+            this.searchString = '';
         }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/account/submission?skip=' + skipEntries, options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.accountName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/account/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
             this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allAccounts = [];
@@ -105,29 +112,32 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
-    showDataByPage(type, skipEntries: number, userType) {
+    showDataByPage(actionType, skipEntries: number, paginationFor, searchString) {
         skipEntries = Number(skipEntries);
-        if (this.skipEntries == 0 && type == 'next') {
+        if (actionType == 'search') {
+            this.searchString = searchString;
+        }
+        if (this.skipEntries == 0 && actionType == 'next') {
             this.skipEntries = 10;
-        } else if (this.skipEntries > 0 && type == 'next') {
+        } else if (this.skipEntries > 0 && actionType == 'next') {
             this.skipEntries = this.skipEntries + skipEntries;
-        } else if (this.skipEntries > 0 && type == 'previous') {
+        } else if (this.skipEntries > 0 && actionType == 'previous') {
             this.skipEntries = this.skipEntries - skipEntries;
-        } else if (type == 'first') {
+        } else if (actionType == 'first') {
             this.skipEntries = 0;
-        } else if (type == 'last') {
+        } else if (actionType == 'last') {
             //Emit last digit of total records and replaced with 0 to skip starting pages
             this.skipEntries = Number(this.totalRecords.slice(0, -1) + '0');
         } else {
             this.skipEntries = skipEntries;
         }
 
-        if (userType == "employee") {
-            this.getEmployeesList(this.skipEntries, '', false);
-        } else if (userType == "customer") {
-            this.getCustomerList(this.skipEntries, '', false);
-        } else if(userType == 'account') {
-            this.getAccountList(this.skipEntries, '', false);
+        if (paginationFor == "employee") {
+            this.getEmployeesList(this.skipEntries, this.searchString, false);
+        } else if (paginationFor == "customer") {
+            this.getCustomerList(this.skipEntries, this.searchString, false);
+        } else if (paginationFor == 'account') {
+            this.getAccountList(this.skipEntries, this.searchString, false);
         }
     }
 
