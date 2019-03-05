@@ -7,13 +7,15 @@
             <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1'" (click)="getEmployeesList()">Employees</a>
+            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1'"
+                (click)="getEmployeesList(0, '', true)">Employees</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL2'" (click)="getCustomerList()">Users</a>
+            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL2'"
+                (click)="getCustomerList(0, '', true)">Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList()">Accounts</a>
+            <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList(0, '', true)">Accounts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#services">Services</a>
@@ -62,11 +64,21 @@
                 </tbody>
             </table>
             <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'employee')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'employee')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'employee')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'employee')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'employee')">Last</div>
+                </li>
             </ul>
         </div>
 
@@ -97,6 +109,23 @@
                     </tr>
                 </tbody>
             </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'customer')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'customer')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'customer')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'customer')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'customer')">Last</div>
+                </li>
+            </ul>
         </div>
 
         <div class="tab-pane container fade" id="accounts">
@@ -118,6 +147,23 @@
                     </tr>
                 </tbody>
             </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'account')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'account')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'account')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'account')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'account')">Last</div>
+                </li>
+            </ul>
         </div>
 
         <div class="tab-pane container fade" id="services">

@@ -50,6 +50,23 @@
                     </tr>
                 </tbody>
             </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'customers')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'customers')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'customers')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'customers')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'customers')">Last</div>
+                </li>
+            </ul>
             <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">Create Customer</div>
         </div>
         <p></p>
