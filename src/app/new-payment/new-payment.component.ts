@@ -49,6 +49,12 @@ export class NewPaymentComponent implements OnInit {
             this.currentUser = Formio.currentUser();
             this.showPaymentScreen = this.authService.showCustomerScreen;
         });
+        const css = 'formio-alerts {display: none;}';
+        const head = document.getElementsByTagName('head')[0];
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode(css));
+        head.appendChild(style);
     }
 
     onSubmit(event: any) {
@@ -63,15 +69,17 @@ export class NewPaymentComponent implements OnInit {
                 let respon = res.json();
                 const submission = event;
                 submission.data.account = respon;
-                this.creditCardHolderName = submission.data.nameonCard;
-                this.creditCardNumber = event.data.panel2CardNumber;
-                if (submission.data.paymentType == 'Credit Card') {
-                    submission.data.panel2CardNumber = submission.data.panel2CardNumber.toString().substr(submission.data.panel2CardNumber.toString().length - 4);
-                }
 
                 if (submission.data.paymentType === "Credit Card") {
+                    this.creditCardNumber = event.data.panel2CardNumber;
+                    this.creditCardHolderName = submission.data.nameonCard;
+                    submission.data.panel2CardNumber = submission.data.panel2CardNumber.toString().substr(submission.data.panel2CardNumber.toString().length - 4);
                     this.updateCreditCardPayment(submission);
                 } else if (submission.data.paymentType === "Direct Debit") {
+                    this.accountName = submission.data.accountName;
+                    this.accountNumber = submission.data.panelAccountNumber;
+                    this.bsb = submission.data.bsb;
+                    this.bankName = submission.data.bankName;
                     this.updateDirectDebitPayment(submission);
                 }
             });
@@ -89,6 +97,11 @@ export class NewPaymentComponent implements OnInit {
                     this.loading = false;
                     return this.alertMessage;
                 }
+            } else {
+                this.showAlertBox = true;
+                this.alertMessage = "Please enter credit card number.";
+                this.loading = false;
+                return this.alertMessage;
             }
             if (event.data.day) {
                 let month = event.data.day.substr(0, event.data.day.indexOf('/'));
@@ -103,11 +116,17 @@ export class NewPaymentComponent implements OnInit {
                     this.loading = false;
                     return this.alertMessage;
                 }
+            } else {
+                this.showAlertBox = true;
+                this.alertMessage = "Please enter expiry date.";
+                this.loading = false;
+                return this.alertMessage;
             }
+        } else {
+            this.showAlertBox = false;
+            this.alertMessage = "";
+            return "success";
         }
-        this.showAlertBox = false;
-        this.alertMessage = "";
-        return "success";
     }
 
     updateCreditCardPayment(submission) {
@@ -127,14 +146,16 @@ export class NewPaymentComponent implements OnInit {
             "user.nextInvoiceDate": "03/01/2019",
             "paymentMethod_0.paymentMethodTypeId": "1",
             "paymentMethod_0.processingOrder": "1",
-            "0_metaField_95.value": this.creditCardHolderName,
-            "0_metaField_96.value": Number(this.creditCardNumber),
-            "0_metaField_97.value": this.expiry,
             "modelIndex": "0",
             "paymentMethod_0.id": "",
             "paymentMethod_0.paymentMethodId": "",
             "currentIndex": "0"
         }
+
+        formData[this.appConfig.creditCardHolderName] = this.creditCardHolderName;
+        formData[this.appConfig.creditCardNumber] = this.creditCardNumber;
+        formData[this.appConfig.creditCardExpiry] = this.expiry;
+
         this.http.put('https://simplebilling.in:8443/customer/11502', formData, options).subscribe((res: any) => {
             this.showSuccessAlertBox = true;
             this.alertMessage = "";
@@ -167,16 +188,20 @@ export class NewPaymentComponent implements OnInit {
             "mainSubscription.nextInvoiceDayOfPeriod": "1",
             "user.accountTypeId": "173",
             "user.nextInvoiceDate": "03/01/2019",
-            "paymentMethod_0.paymentMethodTypeId": "1",
+            "paymentMethod_0.paymentMethodTypeId": "2",
             "paymentMethod_0.processingOrder": "1",
-            "0_metaField_95.value": this.creditCardHolderName,
-            "0_metaField_96.value": Number(this.creditCardNumber),
-            "0_metaField_97.value": this.expiry,
             "modelIndex": "0",
             "paymentMethod_0.id": "",
             "paymentMethod_0.paymentMethodId": "",
             "currentIndex": "0"
         }
+
+        formData[this.appConfig.directDebitAccountName] = this.accountName;
+        formData[this.appConfig.directDebitBankName] = this.bankName;
+        formData[this.appConfig.directDebitAccountNumber] = this.accountNumber;
+        formData[this.appConfig.directDebitAccountType] = "SAVINGS";
+        formData[this.appConfig.directDebitBsb] = this.bsb;
+
         this.http.put('https://simplebilling.in:8443/customer/11502', formData, options).subscribe((res: any) => {
             this.showSuccessAlertBox = true;
             this.alertMessage = "";
