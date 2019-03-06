@@ -19,8 +19,15 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane container active" id="users">
-            <p> </p>
-            <p> </p>
+            <p></p>
+            <div class="row">
+                <div class="col-md-6">
+                    <label> Search by Customer User Name : </label>
+                    <input type="text" class="form-control"
+                        (input)="showDataByPage('search', 0, 'customers', $event.target.value)" />
+                </div>
+            </div>
+            <p></p>
             <table class="table table-condensed table-bordered table-hover">
                 <thead>
                     <th>User Name</th>
@@ -50,7 +57,25 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">Create Customer</div>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'customers', '')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'customers', '')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'customers', '')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'customers', '')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'customers', '')">Last</div>
+                </li>
+            </ul>
+            <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">
+                Create Customer</div>
         </div>
         <p></p>
         <p></p>
@@ -98,7 +123,8 @@
                             <td>{{accountDetails?.tradingName}}</td>
                         </tr>
                     </table>
-                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']" [queryParams]="{accountId: accountId}">Edit Account</button></p>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']"
+                            [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="registeredOffice">
                     <table class="table table-condensed table-bordered">
@@ -212,7 +238,8 @@
                                 <th>**** ***** {{paymentInformation?.data?.panel2CardNumber}}</th>
                                 <th>{{paymentInformation?.data?.day}}</th>
                                 <th>Active</th>
-                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment Authorisation
+                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment
+                                    Authorisation
                                 </th>
                             </thead>
                         </table>
@@ -227,7 +254,8 @@
                                     Account No: {{paymentInformation.data.panelAccountNumber}}
                                 </th>
                                 <th>Active</th>
-                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment Authorisation
+                                <th (click)="updatePayment(paymentInformation._id)" class="link">Update/Change Payment
+                                    Authorisation
                                 </th>
                             </thead>
                         </table>

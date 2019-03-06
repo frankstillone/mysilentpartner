@@ -6,11 +6,13 @@ import { FormioAuthService } from 'angular-formio/auth';
 import { Formio } from 'formiojs';
 import { AppConfig } from '../config';
 import { AuthService } from '../auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-new-payment',
     templateUrl: './new-payment.component.html',
-    styleUrls: ['./new-payment.component.scss']
+    styleUrls: ['./new-payment.component.scss'],
+    providers: [DatePipe]
 })
 export class NewPaymentComponent implements OnInit {
 
@@ -35,8 +37,13 @@ export class NewPaymentComponent implements OnInit {
     private accountNumber: any;
     private bsb: any;
     loading: boolean = false;
+    jbId: any;
+    jbClientId: any;
 
-    constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private http: Http, private auth: FormioAuthService, private authService: AuthService, private router: Router) {
+    private formData = {}
+
+    constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private http: Http, private auth: FormioAuthService, 
+        private authService: AuthService, private router: Router, private datePipe: DatePipe) {
         this.activatedRoute.queryParams.subscribe(params => {
             this.accountId = params['account'];
             this.formio = new Formio(this.appConfig.appUrl + '/accountpayment');
@@ -49,6 +56,12 @@ export class NewPaymentComponent implements OnInit {
             this.currentUser = Formio.currentUser();
             this.showPaymentScreen = this.authService.showCustomerScreen;
         });
+        const css = 'formio-alerts {display: none;}';
+        const head = document.getElementsByTagName('head')[0];
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.appendChild(document.createTextNode(css));
+        head.appendChild(style);
     }
 
     onSubmit(event: any) {
@@ -63,15 +76,18 @@ export class NewPaymentComponent implements OnInit {
                 let respon = res.json();
                 const submission = event;
                 submission.data.account = respon;
-                this.creditCardHolderName = submission.data.nameonCard;
-                this.creditCardNumber = event.data.panel2CardNumber;
-                if (submission.data.paymentType == 'Credit Card') {
-                    submission.data.panel2CardNumber = submission.data.panel2CardNumber.toString().substr(submission.data.panel2CardNumber.toString().length - 4);
-                }
-
+                this.jbId = respon.data.jbId;
+                this.jbClientId = respon.data.jbClientId;
                 if (submission.data.paymentType === "Credit Card") {
+                    this.creditCardNumber = event.data.panel2CardNumber;
+                    this.creditCardHolderName = submission.data.nameonCard;
+                    submission.data.panel2CardNumber = submission.data.panel2CardNumber.toString().substr(submission.data.panel2CardNumber.toString().length - 4);
                     this.updateCreditCardPayment(submission);
                 } else if (submission.data.paymentType === "Direct Debit") {
+                    this.accountName = submission.data.accountName;
+                    this.accountNumber = submission.data.panelAccountNumber;
+                    this.bsb = submission.data.bsb;
+                    this.bankName = submission.data.bankName;
                     this.updateDirectDebitPayment(submission);
                 }
             });
@@ -89,6 +105,11 @@ export class NewPaymentComponent implements OnInit {
                     this.loading = false;
                     return this.alertMessage;
                 }
+            } else if (event.data.panel2CardNumber == '') {
+                this.showAlertBox = true;
+                this.alertMessage = "Please enter credit card number.";
+                this.loading = false;
+                return this.alertMessage;
             }
             if (event.data.day) {
                 let month = event.data.day.substr(0, event.data.day.indexOf('/'));
@@ -103,94 +124,82 @@ export class NewPaymentComponent implements OnInit {
                     this.loading = false;
                     return this.alertMessage;
                 }
+            } else if (event.data.day == '') {
+                this.showAlertBox = true;
+                this.alertMessage = "Please enter expiry date.";
+                this.loading = false;
+                return this.alertMessage;
             }
+            this.showAlertBox = false;
+            this.alertMessage = "";
+            return "success";
+        } else {
+            this.showAlertBox = false;
+            this.alertMessage = "";
+            return "success";
         }
-        this.showAlertBox = false;
-        this.alertMessage = "";
-        return "success";
     }
 
     updateCreditCardPayment(submission) {
-        var headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/json');
-        headers.append('X-Auth-Token', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
-        let options = new RequestOptions({ headers: headers });
-        let formData = {
-            "user.userId": "11502",
-            "mainSubscription.periodId": "2",
-            "user.entityId": "1",
-            "user.userName": "New Siltent User",
-            "metaField_720.value": "test1@test.com",
-            "mainSubscription.nextInvoiceDayOfPeriod": "1",
-            "user.accountTypeId": "173",
-            "user.nextInvoiceDate": "03/01/2019",
-            "paymentMethod_0.paymentMethodTypeId": "1",
-            "paymentMethod_0.processingOrder": "1",
-            "0_metaField_95.value": this.creditCardHolderName,
-            "0_metaField_96.value": Number(this.creditCardNumber),
-            "0_metaField_97.value": this.expiry,
-            "modelIndex": "0",
-            "paymentMethod_0.id": "",
-            "paymentMethod_0.paymentMethodId": "",
-            "currentIndex": "0"
-        }
-        this.http.put('https://simplebilling.in:8443/customer/11502', formData, options).subscribe((res: any) => {
-            this.showSuccessAlertBox = true;
-            this.alertMessage = "";
-            this.alertMessage = "Payment Updated Successfully";
-            var createPayment = new Formio(this.appConfig.appUrl + '/accountpaymentinformation/submission');
-            createPayment.saveSubmission(submission).then((created) => {
-                this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
-                this.loading = false;
-            });
-        }, (error : any) => {
-            this.alertMessage = "";
-            this.alertMessage = JSON.parse(error._body).message;
-            this.showAlertBox = true;
-            this.loading = false;
-        });
+        this.formData[this.appConfig.creditCardHolderName] = this.creditCardHolderName;
+        this.formData[this.appConfig.creditCardNumber] = this.creditCardNumber;
+        this.formData[this.appConfig.creditCardExpiry] = this.expiry;
+        this.setPaymentFields(submission);
     }
 
     updateDirectDebitPayment(submission) {
+        this.formData[this.appConfig.directDebitAccountName] = this.accountName;
+        this.formData[this.appConfig.directDebitBankName] = this.bankName;
+        this.formData[this.appConfig.directDebitAccountNumber] = this.accountNumber;
+        this.formData[this.appConfig.directDebitAccountType] = "SAVINGS";
+        this.formData[this.appConfig.directDebitBsb] = this.bsb;
+        this.setPaymentFields(submission);
+    }
+
+    setPaymentFields(submission) {
         var headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json');
-        headers.append('X-Auth-Token', 'a53b87d4-eb38-4362-b4f9-5283c61b6047');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
         let options = new RequestOptions({ headers: headers });
-        let formData = {
-            "user.userId": "11502",
-            "mainSubscription.periodId": "2",
-            "user.entityId": "1",
-            "user.userName": "New Siltent User",
-            "metaField_720.value": "test1@test.com",
-            "mainSubscription.nextInvoiceDayOfPeriod": "1",
-            "user.accountTypeId": "173",
-            "user.nextInvoiceDate": "03/01/2019",
-            "paymentMethod_0.paymentMethodTypeId": "1",
-            "paymentMethod_0.processingOrder": "1",
-            "0_metaField_95.value": this.creditCardHolderName,
-            "0_metaField_96.value": Number(this.creditCardNumber),
-            "0_metaField_97.value": this.expiry,
-            "modelIndex": "0",
-            "paymentMethod_0.id": "",
-            "paymentMethod_0.paymentMethodId": "",
-            "currentIndex": "0"
-        }
-        this.http.put('https://simplebilling.in:8443/customer/11502', formData, options).subscribe((res: any) => {
-            this.showSuccessAlertBox = true;
-            this.alertMessage = "";
-            this.alertMessage = "Payment Updated Successfully";
-            var updatePayment = new Formio(this.appConfig.appUrl + '/accountpaymentinformation/submission');
-            updatePayment.saveSubmission(submission).then((updated) => {
-                this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
+        this.http.get(this.appConfig.tspBilling + "/customer/" + this.jbId, options).subscribe((res: any) => {
+            let responseFromTSP = res.json();
+            this.formData["user.userId"] = this.jbId;
+            this.formData["mainSubscription.periodId"] = responseFromTSP.mainSubscription.periodId;
+            this.formData["user.entityId"] = responseFromTSP.entityId;
+            this.formData["user.userName"] = responseFromTSP.userName;
+            //this.formData[this.appConfig.customerEmailId] = "mayur.mamoria@gmail.com"; //To be asked
+            this.formData["mainSubscription.nextInvoiceDayOfPeriod"] = responseFromTSP.mainSubscription.nextInvoiceDayOfPeriod;
+            this.formData["user.accountTypeId"] = responseFromTSP.accountTypeId;
+            this.formData["user.nextInvoiceDate"] = this.datePipe.transform(new Date(responseFromTSP.nextInvoiceDate), 'MM/dd/yyyy');
+            this.formData["paymentMethod_0.processingOrder"] = "1";
+            this.formData["modelIndex"] = "0";
+            this.formData["paymentMethod_0.id"] = "";
+            this.formData["paymentMethod_0.paymentMethodId"] = "";
+            this.formData["currentIndex"] = "0";
+            
+            //Set Payment Method Type ID
+            if (submission.data.paymentType === "Credit Card") {
+                this.formData["paymentMethod_0.paymentMethodTypeId"] = "11";
+            } else if (submission.data.paymentType === "Direct Debit") {
+                this.formData["paymentMethod_0.paymentMethodTypeId"] = "13";
+            }
+       
+            this.http.put(this.appConfig.tspBilling + '/customer/' + this.jbId, this.formData, options).subscribe((res: any) => {
+                this.showSuccessAlertBox = true;
+                this.alertMessage = "";
+                this.alertMessage = "Payment Updated Successfully";
+                var createPayment = new Formio(this.appConfig.appUrl + '/accountpaymentinformation/submission');
+                createPayment.saveSubmission(submission).then((created) => {
+                    this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
+                    this.loading = false;
+                });
+            }, (error : any) => {
+                this.alertMessage = "";
+                this.alertMessage = JSON.parse(error._body).message;
+                this.showAlertBox = true;
                 this.loading = false;
             });
-        }, (error : any) => {
-            this.alertMessage = "";
-            this.alertMessage = JSON.parse(error._body).message;
-            this.showAlertBox = true;
-            this.loading = false;
         });
     }
 

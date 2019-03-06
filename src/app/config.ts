@@ -13,8 +13,15 @@ if (query.token) {
 export const AppConfig = {
     apiUrl: "https://api.form.io",
     appUrl: "https://bkvvieybeanbxoh.form.io",
-    adminRoleId: '57e0b699ac09f57b00dc24cd',
-    customerRoleId: '5c1a20915be2dc43dd2c310e',
-    operatorRoleId: '5c1a1e9fa67271cd4efac874',
-    employeeRoleId: '5c1a1ff0a672718497fac88d'
+    simpleBillingXAuthToken: "b4dfb22e-6eac-4f94-9ee6-42e8ccd620dd",
+    tspBilling: "https://simplebilling.in:8444/tspbilling",
+    customerEmailId: "metaField_720.value",
+    creditCardHolderName: "0_metaField_165.value",
+    creditCardNumber: "0_metaField_164.value",
+    creditCardExpiry: "0_metaField_163.value",
+    directDebitBankName: "0_metaField_177.value",
+    directDebitAccountName: "0_metaField_175.value",
+    directDebitAccountNumber: "0_metaField_179.value",
+    directDebitBsb: "0_metaField_178.value",
+    directDebitAccountType: "0_metaField_176.value"
 };

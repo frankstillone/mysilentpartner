@@ -48,6 +48,19 @@ export class AppComponent implements OnInit {
         });
     }
 
+    logout() {
+        this.auth.ready.then(() => {
+            if (this.auth.is.adminl1) {
+                this.changeLoginView('admin');
+            } else if (this.auth.is.employee) {
+                this.changeLoginView('employee');
+            } else if (this.auth.is.customer) {
+                this.changeLoginView('customer');
+            }
+            this.auth.logout();
+        });
+    }
+
     onSubmit(event) {
         this.auth.setUser(event);
         this.navigator();

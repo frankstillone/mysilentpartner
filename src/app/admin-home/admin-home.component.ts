@@ -17,6 +17,14 @@ export class AdminHomeComponent implements OnInit {
     public appConfig = AppConfig;
     public roleType: any;
     public firstName: any;
+    totalPages: any;
+    totalRecords: any;
+    skipEntries: number = 0;
+    showPrevious: boolean = false;
+    showNext: boolean = false;
+    showFirst: boolean = false;
+    showLast: boolean = false;
+    searchString: any = '';
     public allEmployees: any;
     public allCustomers: any;
     public allAccounts: any;
@@ -34,39 +42,61 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
-    getEmployeesList() {
+    onSearchChange(event) {
+        this.getEmployeesList(0, event, false);
+    }
+
+    getEmployeesList(skipEntries, searchQuery, firstTime) {
+        if (firstTime) {
+            this.skipEntries = 0;
+            this.searchString = '';
+        }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/employee/submission?limit=10000000000', options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/employee/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
+            this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allEmployees = respon;
             this.loading = false;
         });
     }
 
-    getCustomerList() {
+    getCustomerList(skipEntries, searchQuery, firstTime) {
+        if (firstTime) {
+            this.skipEntries = 0;
+            this.searchString = '';
+        }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/customer/submission?limit=10000000000', options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/customer/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
+            this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allCustomers = respon;
             this.loading = false;
         });
     }
 
-    getAccountList() {
+    getAccountList(skipEntries, searchQuery, firstTime) {
+        if (firstTime) {
+            this.skipEntries = 0;
+            this.searchString = '';
+        }
         this.loading = true;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append("x-jwt-token", this.authService.getJwtToken());
         let options = new RequestOptions({ headers: headers });
-        this.http.get(this.appConfig.appUrl + '/account/submission?limit=10000000000', options).subscribe((res: any) => {
+        let searchingQuery = searchQuery != '' ? '&data.accountName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/account/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
+            this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
             this.allAccounts = [];
             Object.keys(respon).forEach((key) => {
@@ -80,6 +110,66 @@ export class AdminHomeComponent implements OnInit {
             });
             this.loading = false;
         });
+    }
+
+    showDataByPage(actionType, skipEntries: number, paginationFor, searchString) {
+        skipEntries = Number(skipEntries);
+        if (actionType == 'search') {
+            this.searchString = searchString;
+        }
+        if (this.skipEntries == 0 && actionType == 'next') {
+            this.skipEntries = 10;
+        } else if (this.skipEntries > 0 && actionType == 'next') {
+            this.skipEntries = this.skipEntries + skipEntries;
+        } else if (this.skipEntries > 0 && actionType == 'previous') {
+            this.skipEntries = this.skipEntries - skipEntries;
+        } else if (actionType == 'first') {
+            this.skipEntries = 0;
+        } else if (actionType == 'last') {
+            //Emit last digit of total records and replaced with 0 to skip starting pages
+            this.skipEntries = Number(this.totalRecords.slice(0, -1) + '0');
+        } else {
+            this.skipEntries = skipEntries;
+        }
+
+        if (paginationFor == "employee") {
+            this.getEmployeesList(this.skipEntries, this.searchString, false);
+        } else if (paginationFor == "customer") {
+            this.getCustomerList(this.skipEntries, this.searchString, false);
+        } else if (paginationFor == 'account') {
+            this.getAccountList(this.skipEntries, this.searchString, false);
+        }
+    }
+
+    pagination(recordsFromServer) {
+        this.showPrevious = false;
+        this.showNext = false;
+        this.totalRecords = recordsFromServer;
+        var totalRecords = recordsFromServer;
+        this.totalPages = "";
+        //Get total pages
+        this.totalPages = Math.ceil(totalRecords / 10);
+        if (totalRecords <= 10) {
+            this.showNext = false;
+            this.showPrevious = false;
+            this.showLast = false;
+            this.showFirst = false;
+        } else if (this.skipEntries == 0) {
+            this.showNext = true;
+            this.showPrevious = false;
+            this.showLast = true;
+            this.showFirst = false;
+        } else if ((totalRecords - this.skipEntries) >= 10) {
+            this.showNext = true;
+            this.showPrevious = true;
+            this.showFirst = true;
+            this.showLast = true;
+        } else if ((totalRecords - this.skipEntries) <= 10) {
+            this.showNext = false;
+            this.showPrevious = true;
+            this.showFirst = true;
+            this.showLast = false;
+        }
     }
 
 }
