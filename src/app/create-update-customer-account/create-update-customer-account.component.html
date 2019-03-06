@@ -1,4 +1,6 @@
 <div *ngIf="showCustomerScreen">
+    <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
+        [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
     <div *ngIf="showEditMode">
         <formio *ngIf="editAccountForm" [form]="editAccountForm" [submission]="accountDetails"
             (submit)="updateAccount($event)"></formio>

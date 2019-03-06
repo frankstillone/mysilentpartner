@@ -1,0 +1,34 @@
+<div *ngIf="showCustomerScreen">
+    <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
+            [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
+    <p></p>
+    <h4>Service Name : <strong>{{serviceDetails?.data?.serviceName}}</strong></h4>
+    <p></p>
+    <p></p>
+    <p></p>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#contacts">Contacts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#plan">Plan</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <p></p>
+        <div class="tab-pane container active" id="summary">
+            Summary
+        </div>
+        <div class="tab-pane container" id="contacts">
+            Contacts
+        </div>
+        <div class="tab-pane container" id="plan">
+            Plan
+        </div>
+    </div>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

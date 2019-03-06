@@ -7,15 +7,16 @@
             <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1'"
+            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1' || roleType == 'AdminL2'"
                 (click)="getEmployeesList(0, '', true)">Employees</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL2'"
+            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL1' || roleType == 'AdminL3'"
                 (click)="getCustomerList(0, '', true)">Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList(0, '', true)">Accounts</a>
+            <a class="nav-link" data-toggle="tab" href="#accounts" *ngIf="roleType == 'AdminL1' || roleType == 'AdminL2' || roleType == 'AdminL3'"
+                (click)="getAccountList(0, '', true)">Accounts</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#services">Services</a>

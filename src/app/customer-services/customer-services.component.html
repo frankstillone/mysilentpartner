@@ -62,7 +62,8 @@
                     <div class="page-link active" (click)="showDataByPage('first', 0, 'customers', '')">First</div>
                 </li>
                 <li class="page-item" *ngIf="showPrevious">
-                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'customers', '')">Previous</div>
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'customers', '')">Previous
+                    </div>
                 </li>
                 <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
                     <div class="page-link active" (click)="showDataByPage('', i+'0', 'customers', '')">{{i+1}}</div>
@@ -429,37 +430,63 @@
         </div>
         <div class="tab-pane container fade" id="services">
             <p></p>
+            <p><button class="btn btn-primary" [routerLink]="['../createAccountService']"
+                    [queryParams]="{accountId: accountId}">Create Service</button></p>
             <table class="table table-condensed table-hover table-bordered">
                 <thead class="thead-light">
-                    <th>ServiceID</th>
+                    <!-- <th>ServiceID</th> -->
                     <th>Service Type</th>
                     <th>Service Name</th>
-                    <th>Comment</th>
+                    <th>Action</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let callAnsweringService of callAnsweringServices">
-                        <td>7895</td>
-                        <td>{{callAnsweringService?.data?.serviceType}}</td>
+                    <tr *ngFor="let callAnsweringService of callAnsweringServices"
+                        [routerLink]="['../callAnsweringHome']"
+                        [queryParams]="{serviceId: callAnsweringService._id, accountId: accountId}"
+                        style="cursor: pointer;">
+                        <!-- <td>7895</td> -->
+                        <td>Call Answering</td>
                         <td>{{callAnsweringService?.data?.serviceName}}</td>
-                        <td></td>
+                        <td>
+                            <div class="link" [routerLink]="['../updateAccountService']"
+                                [queryParams]="{serviceId: callAnsweringService._id, type: 'callAnswering', accountId: accountId}">
+                                Edit</div>
+                        </td>
                     </tr>
-                    <tr *ngFor="let addressService of addressLicenseServices">
-                        <td>7895</td>
-                        <td>{{addressService?.data?.serviceType}}</td>
+                    <tr *ngFor="let addressService of addressLicenseServices" [routerLink]="['../addressLicenseHome']"
+                        [queryParams]="{serviceId: addressService._id, accountId: accountId}" style="cursor: pointer;">
+                        <!-- <td>7895</td> -->
+                        <td>Virtual Address</td>
                         <td>{{addressService?.data?.serviceName}}</td>
-                        <td></td>
+                        <td>
+                            <div class="link" [routerLink]="['../updateAccountService']"
+                                [queryParams]="{serviceId: addressService._id, type: 'addressLicence', accountId: accountId}">
+                                Edit</div>
+                        </td>
                     </tr>
-                    <tr *ngFor="let liveChatService of liveChatServices">
-                        <td>7895</td>
-                        <td>{{liveChatService?.data?.serviceType}}</td>
+                    <tr *ngFor="let liveChatService of liveChatServices" [routerLink]="['../liveChatHome']"
+                        [queryParams]="{serviceId: liveChatService._id, accountId: accountId}" style="cursor: pointer;">
+                        <!-- <td>7895</td> -->
+                        <td>Live Chat</td>
                         <td>{{liveChatService?.data?.serviceName}}</td>
-                        <td></td>
+                        <td>
+                            <div class="link" [routerLink]="['../updateAccountService']"
+                                [queryParams]="{serviceId: liveChatService._id, type: 'liveChat', accountId: accountId}">
+                                Edit</div>
+                        </td>
                     </tr>
-                    <tr *ngFor="let emailProcessingService of emailProcessingServices">
-                        <td>7895</td>
-                        <td>{{emailProcessingService?.data?.serviceType}}</td>
+                    <tr *ngFor="let emailProcessingService of emailProcessingServices"
+                        [routerLink]="['../emailProcessingHome']"
+                        [queryParams]="{serviceId: emailProcessingService._id, accountId: accountId}"
+                        style="cursor: pointer;">
+                        <!-- <td>7895</td> -->
+                        <td>Email Processing</td>
                         <td>{{emailProcessingService?.data?.serviceName}}</td>
-                        <td></td>
+                        <td>
+                            <div class="link" [routerLink]="['../updateAccountService']"
+                                [queryParams]="{serviceId: emailProcessingService._id, type: 'email', accountId: accountId}">
+                                Edit</div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
