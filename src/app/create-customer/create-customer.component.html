@@ -2,6 +2,9 @@
     <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
         [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
     <p></p><br><br>
-    <formio *ngIf="form" [form]="form" (submit)="createCustomer($event)"></formio>
+    <div class="alert alert-danger" *ngIf="showAlertBox" [innerHTML]="errorMessage"></div>
+    <formio *ngIf="form && showCreateCustomer" [form]="form" (submit)="createCustomer($event)"></formio>
+    <formio *ngIf="form && showChildCustomer" [form]="form" [submission]="customerDetails" (submit)="updateChildCustomer($event)"></formio>
+    <formio *ngIf="form && showParentCustomer" [form]="form" [submission]="customerDetails" (submit)="updateChildCustomer($event)"></formio>
     <div *ngIf="loading" class="loading">Loading&#8230;</div>
 </div>

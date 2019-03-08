@@ -85,6 +85,14 @@ export class CustomerServicesComponent implements OnInit {
         });
     }
 
+    editChildCustomer(customerType, customerId) {
+        if(customerType == 'child') {
+            this.router.navigate(['createUpdateCustomer'], {queryParams: { customerId: customerId, accountId: this.accountId }});
+        } else if(customerType == "parent") {
+            this.router.navigate(['createUpdateCustomer'], {queryParams: { customerId: customerId, accountId: this.accountId, customerType: 'parent' }});
+        }
+    }
+
     newPayment() {
         this.router.navigate(['payment'], { queryParams: { account: this.accountId } });
     }

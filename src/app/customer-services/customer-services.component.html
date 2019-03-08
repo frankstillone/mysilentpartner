@@ -42,18 +42,25 @@
                         <td>{{accountDetails?.userName.data.email}}</td>
                         <td>admin</td>
                         <td>Current User</td>
-                        <td><a href="#">Edit</a> | <a href="#" class="text-muted"
-                                style="pointer-events: none;cursor: default;text-decoration: none;">Disable</a> | <a
-                                href="#">Change Password</a></td>
+                        <td><span class="link"
+                                (click)="editChildCustomer('parent', accountDetails?.userName?._id)">Edit</span> | <a
+                                href="#" class="text-muted"
+                                style="pointer-events: none;cursor: default;text-decoration: none;">Disable</a> | <span
+                                [routerLink]="['../submitCustomerResetPassword']" class="link"
+                                [queryParams]="{login: 'true', accountId: accountId, customerId: accountDetails?.userName?._id}">Change
+                                Password</span></td>
                     </tr>
                     <tr *ngFor="let customerUser of customerUser">
-                        <td>{{customerUser?.data.customer.data.userName}}</td>
+                        <td>{{customerUser?.data?.customer?.data?.userName}}</td>
                         <td>{{customerUser?.data?.customer?.data?.email}}</td>
-                        <!-- <td>{{customerUser?.data.user.data.role}}</td> -->
-                        <!-- <td>{{customerUser?.data.user.data.status}}</td> -->
-                        <td></td>
-                        <td></td>
-                        <td><a href="#">Edit</a> | <a href="#">Disable</a> | <a href="#">Change Password</a></td>
+                        <td>{{customerUser?.data?.role}}</td>
+                        <td>{{customerUser?.data?.status}}</td>
+                        <td><span class="link"
+                                (click)="editChildCustomer('child', customerUser?.data?.customer?._id)">Edit</span> | <a
+                                href="#">Disable</a> | <span
+                                [routerLink]="['../submitCustomerResetPassword']" class="link"
+                                [queryParams]="{login: 'true', accountId: accountId, customerId: customerUser?.data?.customer?._id}">Change
+                                Password</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -75,7 +82,8 @@
                     <div class="page-link active" (click)="showDataByPage('last', 0, 'customers', '')">Last</div>
                 </li>
             </ul>
-            <div class="btn btn-primary" [routerLink]="['../createCustomer']" [queryParams]="{account: accountId}">
+            <div class="btn btn-primary" [routerLink]="['../createUpdateCustomer']"
+                [queryParams]="{accountId: accountId}">
                 Create Customer</div>
         </div>
         <p></p>
@@ -457,7 +465,7 @@
                         [queryParams]="{serviceId: addressService._id, accountId: accountId}" style="cursor: pointer;">
                         <!-- <td>7895</td> -->
                         <td>Virtual Address</td>
-                        <td>{{addressService?.data?.serviceName}}</td>
+                        <td>{{addressService?.data?.addressServiceName}}</td>
                         <td>
                             <div class="link" [routerLink]="['../updateAccountService']"
                                 [queryParams]="{serviceId: addressService._id, type: 'addressLicence', accountId: accountId}">

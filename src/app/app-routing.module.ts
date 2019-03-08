@@ -56,7 +56,7 @@ const routes: Routes = [
         component: CreateUpdateCustomerAccountComponent
     },
     {
-        path: 'createCustomer',
+        path: 'createUpdateCustomer',
         component: CreateCustomerComponent
     },
     {
