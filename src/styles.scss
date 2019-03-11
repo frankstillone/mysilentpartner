@@ -194,3 +194,28 @@ hr {
 .custom-table td {
     border: unset !important;
 }
+footer {
+    position: fixed;
+    height: 135px;
+    bottom: 0;
+    background: #75a8bc;
+    width: 100%;
+}
+.footer-right-text {
+    padding-top:10px;
+    color: white;
+    font-weight: 700;
+    text-align: right;
+}
+.custom-footer-logo {
+    margin-top: 33px;
+}
+.footer-social img {
+    height: 26px;
+}
+.footer-text-phone {
+    color: #707a82;
+}
+.footer-text-slash {
+    color: #ffa409;
+}
