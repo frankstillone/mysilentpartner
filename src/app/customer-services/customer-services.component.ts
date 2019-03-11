@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
+import { Formio } from 'formiojs';
 
 @Component({
     selector: 'app-customer-services',
@@ -151,6 +152,42 @@ export class CustomerServicesComponent implements OnInit {
         this.http.get(this.appConfig.appUrl + '/addresslicenseservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
             this.addressLicenseServices = res.json();
             this.loading = false;
+        });
+    }
+
+    disableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Inactive";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.customerUser[index].data.customer.data.status = "Inactive";
+                console.log(this.customerUser[index]);
+                this.loading = false;
+            });
+        });
+    }
+
+    enableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Active";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.customerUser[index].data.customer.data.status = "Active";
+                console.log(this.customerUser[index]);
+                this.loading = false;
+            });
         });
     }
 

@@ -50,17 +50,18 @@
                                 [queryParams]="{login: 'true', accountId: accountId, customerId: accountDetails?.userName?._id}">Change
                                 Password</span></td>
                     </tr>
-                    <tr *ngFor="let customerUser of customerUser">
+                    <tr *ngFor="let customerUser of customerUser;let i = index">
                         <td>{{customerUser?.data?.customer?.data?.userName}}</td>
                         <td>{{customerUser?.data?.customer?.data?.email}}</td>
                         <td>{{customerUser?.data?.role}}</td>
-                        <td>{{customerUser?.data?.status}}</td>
-                        <td><span class="link"
-                                (click)="editChildCustomer('child', customerUser?.data?.customer?._id)">Edit</span> | <a
-                                href="#">Disable</a> | <span
-                                [routerLink]="['../submitCustomerResetPassword']" class="link"
-                                [queryParams]="{login: 'true', accountId: accountId, customerId: customerUser?.data?.customer?._id}">Change
-                                Password</span></td>
+                        <td>{{customerUser?.data?.customer?.data?.status}}</td>
+                        <td>
+                            <span class="link" (click)="editChildCustomer('child', customerUser?.data?.customer?._id)">Edit</span> | 
+                            <span *ngIf="customerUser?.data?.customer?.data?.status == 'Active'" class="link" (click)="disableCustomer(customerUser?.data?.customer?._id, i)">Disable | </span>
+                            <span *ngIf="customerUser?.data?.customer?.data?.status == 'Inactive'" class="link" (click)="enableCustomer(customerUser?.data?.customer?._id, i)">Enable | </span>
+                            <span [routerLink]="['../submitCustomerResetPassword']" class="link"
+                                [queryParams]="{login: 'true', accountId: accountId, customerId: customerUser?.data?.customer?._id}">Change Password</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
