@@ -52,24 +52,28 @@ export class SubmitCustomerResetPasswordComponent implements OnInit {
     }
 
     onSubmit(submission: any) {
-        const customer = new Formio(this.appConfig.appUrl + '/customer/submission/' + this.customerId);
-        this.authService.setRoleId(null);
-        this.auth.ready.then(() => {
-            this.authService.setGlobalRole(this.auth.is);
-        });
-        this.authService.setUserName(null);
-        this.customerDetails.data.password = submission.data.newPassword;
-        submission._id = this.customerId;
-        submission.data = this.customerDetails.data;
-        customer.saveSubmission(submission).then(() => {
-            if (this.login) {
+        if (this.accountId && this.customerId) {
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/' + this.customerId);
+            this.customerDetails.data.password = submission.data.newPassword;
+            submission._id = this.customerId;
+            submission.data = this.customerDetails.data;
+            customer.saveSubmission(submission).then(() => {
                 this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
-            } else {
+            });
+        } else {
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/' + this.auth.user._id);
+            this.auth.user.data.password = submission.data.newPassword;
+            customer.saveSubmission(this.auth.user).then(() => {
+                this.authService.setRoleId(null);
+                this.auth.ready.then(() => {
+                    this.authService.setGlobalRole(this.auth.is);
+                });
+                this.authService.setUserName(null);
                 this.auth.logout();
                 this.authService.destroyRoles();
                 this.router.navigate(['auth']);
-            }
-        });
+            });
+        }
     }
 
 }
