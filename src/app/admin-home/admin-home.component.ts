@@ -105,10 +105,27 @@ export class AdminHomeComponent implements OnInit {
                 this.http.get(this.appConfig.appUrl + '/customeraccount/submission?data.account._id=' + respon[key]._id, options).subscribe((response: any) => {
                     let resp = response.json();
                     totalLinkedUsers = resp.length;
-                    this.allAccounts.push(new Record(respon[key]._id, respon[key].data.accountName, totalLinkedUsers, 0));
+                    this.http.get(this.appConfig.appUrl + '/addresslicenseservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((addressResponse: any) => {
+                        let addressRespon = addressResponse.json();
+                        totalLinkedServices = addressRespon.length;
+                        this.http.get(this.appConfig.appUrl + '/callansweringservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((callAnsResponse: any) => {
+                            let callAnsRespon = callAnsResponse.json();
+                            totalLinkedServices = totalLinkedServices + callAnsRespon.length;
+                            this.http.get(this.appConfig.appUrl + '/livechatservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((liveChatResponse: any) => {
+                                let liveChatRespon = liveChatResponse.json();
+                                totalLinkedServices = totalLinkedServices + liveChatRespon.length;
+                                this.http.get(this.appConfig.appUrl + '/emailprocessingservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((emailtResponse: any) => {
+                                    let emailRespon = emailtResponse.json();
+                                    totalLinkedServices = totalLinkedServices + emailRespon.length;
+                                    this.allAccounts.push(new Record(respon[key]._id, respon[key].data.accountName, totalLinkedUsers, totalLinkedServices));
+                                    this.loading = false;
+                                });
+                            });
+                        });
+                    });
                 });
+                
             });
-            this.loading = false;
         });
     }
 

@@ -167,7 +167,6 @@ export class CustomerServicesComponent implements OnInit {
             const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
             customer.saveSubmission(response).then(() => {
                 this.customerUser[index].data.customer.data.status = "Inactive";
-                console.log(this.customerUser[index]);
                 this.loading = false;
             });
         });
@@ -185,7 +184,6 @@ export class CustomerServicesComponent implements OnInit {
             const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
             customer.saveSubmission(response).then(() => {
                 this.customerUser[index].data.customer.data.status = "Active";
-                console.log(this.customerUser[index]);
                 this.loading = false;
             });
         });
