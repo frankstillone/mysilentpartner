@@ -14,6 +14,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#services" (click)="getAccountServices()">Services</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#support">Support</a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
@@ -499,6 +502,64 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="tab-pane container active" id="support">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#resources">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#requests">Requests</a>
+                </li>
+            </ul>
+            <p></p>
+            <div class="tab-content">
+                <div class="tab-pane container active" id="resources">
+                    Resources
+                </div>
+                <div class="tab-pane container fade" id="requests">
+                    <table class="table table-condensed table-hover table-bordered">
+                        <thead class="thead-light">
+                            <th>Request ID</th>
+                            <th>Creation Date</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email Address</th>
+                            <th>Contacted Via</th>
+                            <th>Subject</th>
+                            <th>Open / Closed</th>
+                            <th>Status</th>
+                            <th>Category</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>223344</td>
+                                <td>22 Jan 2017</td>
+                                <td>Mary</td>
+                                <td>Poppins</td>
+                                <td>test@test.com</td>
+                                <td>email</td>
+                                <td>This is a test subject line</td>
+                                <td>Open</td>
+                                <td>Open : Work in Progress</td>
+                                <td>Account General</td>
+                            </tr>
+                            <tr>
+                                <td>222344</td>
+                                <td>15 Dec 2018</td>
+                                <td>Mary</td>
+                                <td>Poppins</td>
+                                <td>test@test.com</td>
+                                <td>email</td>
+                                <td>This is another test subject line</td>
+                                <td>Closed</td>
+                                <td>Closed : Results</td>
+                                <td>Support Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
