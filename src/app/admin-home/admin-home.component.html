@@ -111,13 +111,18 @@
                     <th>Action</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let customer of allCustomers">
-                        <td>{{ customer?._id }}</td>
-                        <td>{{ customer?.data?.userName }}</td>
-                        <td>{{ customer?.data?.email }}</td>
-                        <td>{{ customer?.data?.status }}</td>
-                        <td>1</td>
-                        <td>View | Disable</td>
+                    <tr *ngFor="let customer of allCustomers;let i = index">
+                        <td>{{ customer?.id }}</td>
+                        <td>{{ customer?.userName }}</td>
+                        <td>{{ customer?.email }}</td>
+                        <td>{{ customer?.status }}</td>
+                        <td>{{ customer?.accountsAttached }}</td>
+                        <td>
+                            View |
+                            <span *ngIf="customer?.status == 'Active'" class="link" (click)="disableCustomer(customer.id, i)">Disable</span>
+                            <span *ngIf="customer?.status == 'Inactive'" class="link" (click)="enableCustomer(customer.id, i)">Enable</span>
+                        </td>
+                        <!-- <td>View | Disable</td> -->
                     </tr>
                 </tbody>
             </table>
