@@ -40,6 +40,8 @@ export class CustomerServicesComponent implements OnInit {
     showFirst: boolean = false;
     showLast: boolean = false;
     searchString: any = '';
+    accountPayments: any;
+    accountInvoices: any;
 
     constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public auth: FormioAuthService) { }
 
@@ -186,6 +188,39 @@ export class CustomerServicesComponent implements OnInit {
                 this.customerUser[index].data.customer.data.status = "Active";
                 this.loading = false;
             });
+        });
+    }
+
+    getInvoicesForAccount() {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/invoice/user/" + this.accountDetails.jbId, options).subscribe((res: any) => {
+            this.accountInvoices = res.json();
+        });
+    }
+
+    getPaymentsForAccount() {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/payment/user/" + this.accountDetails.jbId, options).subscribe((res: any) => {
+            this.accountPayments = res.json();
+        });
+    }
+
+    downloadInvoice(invoiceId) {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/invoice/downloadPdf/" + invoiceId, options).subscribe((res: any) => {
+            window.location.href = res.url;
         });
     }
 

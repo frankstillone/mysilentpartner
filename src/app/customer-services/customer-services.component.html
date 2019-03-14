@@ -301,10 +301,10 @@
                     <a class="nav-link active" data-toggle="tab" href="#summary2">Summary</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#invoices">Invoices</a>
+                    <a class="nav-link" data-toggle="tab" href="#invoices" (click)="getInvoicesForAccount()">Invoices</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#payments">Payments</a>
+                    <a class="nav-link" data-toggle="tab" href="#payments" (click)="getPaymentsForAccount()">Payments</a>
                 </li>
             </ul>
             <p></p>
@@ -330,12 +330,6 @@
                     </table>
                 </div>
                 <div class="tab-pane container fade" id="invoices">
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <span>This is a summary of all the invoices for this account. There would be a link where each
-                            invoice can be downloaded. At the bottom there would be a link where the user could download
-                            a csv table of all invoices</span>
-                    </div>
                     <table class="table table-condensed table-hover table-bordered">
                         <thead class="thead-light">
                             <th>Date</th>
@@ -344,52 +338,16 @@
                             <th>Download</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td><a href="#">Link</a></td>
+                            <tr *ngFor="let invoice of accountInvoices">
+                                <td>{{invoice?.dueDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{invoice?.id}}</td> 
+                                <td>${{invoice?.totalAsDecimal}}</td>
+                                <td><span class="link" (click)="downloadInvoice(invoice?.id)">Download</span></td>
                             </tr>
                         </tbody>
                     </table>
-                    <p>Download CSV summary table</p>
                 </div>
                 <div class="tab-pane container fade" id="payments">
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <span>This is a summary of all payments for this account. At the bottom there would be a link
-                            where the user could download a csv table of all payments.</span>
-                    </div>
                     <table class="table table-condensed table-hover table-bordered">
                         <thead class="thead-light">
                             <th>Payment Date</th>
@@ -398,45 +356,14 @@
                             <th>Payment Method</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
-                            </tr>
-                            <tr>
-                                <td>1/12/18</td>
-                                <td>876789</td>
-                                <td>$99.99</td>
-                                <td>Visa ***3567</td>
+                            <tr *ngFor="let payment of accountPayments">
+                                <td>{{payment?.paymentDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{payment?.id}}</td>
+                                <td>$ {{payment?.amountAsDecimal}}</td>
+                                <td>{{payment?.method}} {{payment?.paymentInstruments[0]?.metaFields[4]?.value}}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <p>Download csv summary table</p>
                 </div>
             </div>
         </div>
