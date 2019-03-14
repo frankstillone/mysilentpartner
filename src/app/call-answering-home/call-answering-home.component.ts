@@ -19,6 +19,9 @@ export class CallAnsweringHomeComponent implements OnInit {
     serviceDetails: any;
     accountId: any;
     accountDetails: any;
+    allContacts: any;
+    allVirtualPhoneNumber: any;
+    allVirtualPhoneNumberDiversion: any;
 
     constructor(private authService: AuthService, private http: Http, public auth: FormioAuthService, private router: Router,
         private activatedRoute: ActivatedRoute) {
@@ -55,6 +58,42 @@ export class CallAnsweringHomeComponent implements OnInit {
         let options = new RequestOptions({ headers: headers });
         this.http.get(this.appConfig.appUrl + '/callansweringservice/submission?_id=' + this.serviceId, options).subscribe((res: any) => {
             this.serviceDetails = res.json()[0];
+            this.loading = false;
+        });
+    }
+
+    getContacts() {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/callansweringcontact/submission?data.serviceType._id=' + this.serviceId, options).subscribe((res: any) => {
+            this.allContacts = res.json();
+            this.loading = false;
+        });
+    }
+
+    getVirtualPhoneNumber() {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/callansweringvirtualphonenumber/submission?data.serviceType._id=' + this.serviceId, options).subscribe((res: any) => {
+            this.allVirtualPhoneNumber = res.json();
+            this.loading = false;
+        });
+    }
+
+    getVirtualPhoneNumberDiversion() {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/callansweringvirtualphonenumberdiversion/submission?data.serviceType._id=' + this.serviceId, options).subscribe((res: any) => {
+            this.allVirtualPhoneNumberDiversion = res.json();
             this.loading = false;
         });
     }

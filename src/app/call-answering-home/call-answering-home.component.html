@@ -2,7 +2,7 @@
     <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
             [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
     <p></p>
-    <h4>Service Name : <strong>{{serviceDetails?.data?.serviceName}}</strong></h4>
+    <h4>Service Name : <strong>{{serviceDetails?.data?.callAnsweringServiceName}}</strong></h4>
     <p></p>
     <p></p>
     <p></p>
@@ -11,7 +11,14 @@
             <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#contacts">Contacts</a>
+            <a class="nav-link" data-toggle="tab" href="#contacts" (click)="getContacts()">Contacts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vpn" (click)="getVirtualPhoneNumber()">Virtual Phone Number</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vpnd" (click)="getVirtualPhoneNumberDiversion()">Virtual Phone
+                Number Diversion</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#callsIn">Calls In</a>
@@ -33,7 +40,46 @@
             Summary
         </div>
         <div class="tab-pane container" id="contacts">
-            Contacts
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contact of allContacts">
+                        <td>{{ contact?.data.contactName }}</td>
+                        <td>{{ contact?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container" id="vpn">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let virtualPhoneNumber of allVirtualPhoneNumber">
+                        <td>{{ virtualPhoneNumber?.data.name }}</td>
+                        <td>{{ virtualPhoneNumber?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container" id="vpnd">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let virtualPhoneNumberDiversion of allVirtualPhoneNumberDiversion">
+                        <td>{{ virtualPhoneNumberDiversion?.data.name }}</td>
+                        <td>{{ virtualPhoneNumberDiversion?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="tab-pane container" id="callsIn">
             Calls In

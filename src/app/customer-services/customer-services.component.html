@@ -457,8 +457,8 @@
                         [queryParams]="{serviceId: callAnsweringService._id, accountId: accountId}"
                         style="cursor: pointer;">
                         <!-- <td>7895</td> -->
-                        <td>Call Answering</td>
-                        <td>{{callAnsweringService?.data?.serviceName}}</td>
+                        <td>{{callAnsweringService?.data?.serviceType}}</td>
+                        <td>{{callAnsweringService?.data?.callAnsweringServiceName}}</td>
                         <td>
                             <div class="link" [routerLink]="['../updateAccountService']"
                                 [queryParams]="{serviceId: callAnsweringService._id, type: 'callAnswering', accountId: accountId}">
