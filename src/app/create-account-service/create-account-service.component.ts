@@ -51,11 +51,32 @@ export class CreateAccountServiceComponent implements OnInit {
     createService(event) {
         this.loading = true;
         const submission = event;
+        if(submission.data.parentServiceType == 'addresslicenseservice') {
+            submission.data.serviceType = "Virtual Address";
+        } else if(submission.data.parentServiceType == 'callansweringservice') {
+            submission.data.serviceType = "Call Answering";
+        } else if(submission.data.parentServiceType == 'livechatservice') {
+            submission.data.serviceType = "Live Chat";
+        } else if(submission.data.parentServiceType == 'emailprocessingservice') {
+            submission.data.serviceType = "Email Processing";
+        }
         submission.data.accountName = this.accountDetails;
         var createService = new Formio(this.appConfig.appUrl + '/' + submission.data.parentServiceType + '/submission');
         createService.saveSubmission(submission).then((created) => {
-            this.loading = false;
-            this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
+            if(submission.data.parentServiceType == 'addresslicenseservice') {
+                submission.data.addressService = created;
+            } else if(submission.data.parentServiceType == 'callansweringservice') {
+                submission.data.callAnsweringService = created;
+            } else if(submission.data.parentServiceType == 'livechatservice') {
+                submission.data.liveChatService = created;
+            } else if(submission.data.parentServiceType == 'emailprocessingservice') {
+                submission.data.emailService = created;
+            }
+            var updatedServiceAccount = new Formio(this.appConfig.appUrl + '/accountservice/submission');
+            updatedServiceAccount.saveSubmission(submission).then((update) => {
+                this.loading = false;
+                this.router.navigate(['customerServices'], { queryParams: { accountId: this.accountId } });
+            });
         });
     }
 

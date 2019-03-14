@@ -468,7 +468,7 @@
                     <tr *ngFor="let addressService of addressLicenseServices" [routerLink]="['../addressLicenseHome']"
                         [queryParams]="{serviceId: addressService._id, accountId: accountId}" style="cursor: pointer;">
                         <!-- <td>7895</td> -->
-                        <td>Virtual Address</td>
+                        <td>{{addressService?.data?.serviceType}}</td>
                         <td>{{addressService?.data?.addressServiceName}}</td>
                         <td>
                             <div class="link" [routerLink]="['../updateAccountService']"
@@ -493,7 +493,7 @@
                         style="cursor: pointer;">
                         <!-- <td>7895</td> -->
                         <td>Email Processing</td>
-                        <td>{{emailProcessingService?.data?.serviceName}}</td>
+                        <td>{{emailProcessingService?.data?.emailServiceName}}</td>
                         <td>
                             <div class="link" [routerLink]="['../updateAccountService']"
                                 [queryParams]="{serviceId: emailProcessingService._id, type: 'email', accountId: accountId}">

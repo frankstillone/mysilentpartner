@@ -66,6 +66,26 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
+    getServicesList(skipEntries, searchQuery, firstTime) {
+        if (firstTime) {
+            this.skipEntries = 0;
+            this.searchString = '';
+        }
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        //TODO:: Searching is remaining in this
+        //let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/accountservice/submission?skip=' + skipEntries, options).subscribe((res: any) => {
+            this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
+            let respon = res.json();
+            this.allServices = respon;
+            this.loading = false;
+        });
+    }
+
     getCustomerList(skipEntries, searchQuery, firstTime) {
         if (firstTime) {
             this.skipEntries = 0;
@@ -210,6 +230,8 @@ export class AdminHomeComponent implements OnInit {
             this.getCustomerList(this.skipEntries, this.searchString, false);
         } else if (paginationFor == 'account') {
             this.getAccountList(this.skipEntries, this.searchString, false);
+        } else if(paginationFor == 'service') {
+            this.getServicesList(this.skipEntries, this.searchString, false);
         }
     }
 
