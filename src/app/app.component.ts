@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
 import { AppConfig } from './config';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { AuthService } from './auth.service';
+import { Formio } from 'formiojs';
 
 @Component({
     selector: 'app-root',
@@ -21,8 +22,11 @@ export class AppComponent implements OnInit {
     customerResetPassword: boolean = false;
     employeeResetPassword: boolean = false;
     adminResetPassword: boolean = false;
-    showAlertBox = false;
+    showAlertBox: boolean = false;
+    showErrorAlertBox: boolean = false;
     alertMessage: any;
+    formio: any;
+    public form: any;
 
     constructor(public auth: FormioAuthService, public router: Router, private http: Http, private authService: AuthService) {
         this.auth.onLogin.subscribe(() => {
@@ -66,7 +70,7 @@ export class AppComponent implements OnInit {
         this.navigator();
     }
 
-    showMessage(showMessageFor) {
+    showMessage(showMessageFor, submission) {
         this.customerLogin = false;
         this.employeeLogin = false;
         this.adminLogin = false;
@@ -78,9 +82,49 @@ export class AppComponent implements OnInit {
             this.showAlertBox = true;
             this.alertMessage = "Thank you for the registration. We have sent an email to the given email address. Please check your inbox to set your password.";
         } else if (showMessageFor === 'customerResetPassword' || showMessageFor === 'employeeResetPassword' || showMessageFor === 'adminResetPassword') {
+            this.submitResetPassword(showMessageFor, submission);
+        }
+    }
+
+    loadForm(formType) {
+        this.formio = new Formio(this.appConfig.appUrl + '/' + formType);
+        this.formio.loadForm().then(form => (this.form = form));
+    }
+
+    submitResetPassword(showMessageFor, submission) {
+        const newSubmission = submission;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let options = new RequestOptions({ headers: headers });
+        if (showMessageFor === 'customerResetPassword') {
+            this.http.get(this.appConfig.appUrl + '/customer/exists?data.email=' + newSubmission.data.email, options).subscribe((res: any) => {
+                this.sendResetPasswordLink(newSubmission);
+            }, (error: any) => {
+                this.alertMessage = "The email address provided doesn't exists. Please contact your administrator.";
+                this.showErrorAlertBox = true;
+            });
+        } else if (showMessageFor === 'employeeResetPassword') {
+            this.http.get(this.appConfig.appUrl + '/employee/exists?data.email=' + newSubmission.data.email, options).subscribe((res: any) => {
+                this.sendResetPasswordLink(newSubmission);
+            }, (error: any) => {
+                this.alertMessage = "The email address provided doesn't exists. Please contact your administrator.";
+                this.showErrorAlertBox = true;
+            });
+        } else if (showMessageFor === 'adminResetPassword') {
+            this.http.get(this.appConfig.appUrl + '/admin/exists?data.email=' + newSubmission.data.email, options).subscribe((res: any) => {
+                this.sendResetPasswordLink(newSubmission);
+            }, (error: any) => {
+                this.showErrorAlertBox = true;
+                this.alertMessage = "The email address provided doesn't exists. Please contact your administrator.";
+            });
+        }
+    }
+
+    sendResetPasswordLink(submission) {
+        this.formio.saveSubmission(submission).then((created) => {
             this.showAlertBox = true;
             this.alertMessage = "Thank you. Please check your inbox to reset your password.";
-        }
+        });
     }
 
     navigator(): void {
@@ -115,6 +159,7 @@ export class AppComponent implements OnInit {
             this.employeeResetPassword = false;
             this.adminResetPassword = false;
             this.showAlertBox = false;
+            this.showErrorAlertBox = false;
             this.alertMessage = "";
 
             if (changeViewTo === 'customer') {
@@ -126,13 +171,15 @@ export class AppComponent implements OnInit {
             } else if (changeViewTo === 'customerRegistration') {
                 this.customerRegistration = true;
             } else if (changeViewTo === 'customerResetPassword') {
+                this.loadForm('sendcustomerresetpassword');
                 this.customerResetPassword = true;
             } else if (changeViewTo === 'employeeResetPassword') {
+                this.loadForm('sendemployeeresetpassword');
                 this.employeeResetPassword = true;
             } else if (changeViewTo === 'adminResetPassword') {
+                this.loadForm('sendadminresetpassword');
                 this.adminResetPassword = true;
             }
         }
     }
-
 }
