@@ -101,31 +101,19 @@
         <table align="center">
             <tr>
                 <td *ngIf="!customerLogin">
-                    <div class="nav-link">|</div>
-                </td>
-                <td *ngIf="!customerLogin">
                     <div class="nav-link nav-link-custom" (click)="changeLoginView('customer')">Customer Login</div>
                 </td>
-                <td *ngIf="!customerLogin">
-                    <div class="nav-link">|</div>
-                </td>
-                <td *ngIf="!employeeLogin">
+                <td *ngIf="!customerLogin || employeeLogin">
                     <div class="nav-link">|</div>
                 </td>
                 <td *ngIf="!employeeLogin">
                     <div class="nav-link nav-link-custom" (click)="changeLoginView('employee')">Employee Login</div>
                 </td>
-                <td *ngIf="!employeeLogin">
-                    <div class="nav-link">|</div>
-                </td>
-                <td *ngIf="!adminLogin">
+                <td *ngIf="!employeeLogin && !adminLogin">
                     <div class="nav-link">|</div>
                 </td>
                 <td *ngIf="!adminLogin">
                     <div class="nav-link nav-link-custom" (click)="changeLoginView('admin')">Admin Login</div>
-                </td>
-                <td *ngIf="!adminLogin">
-                    <div class="nav-link">|</div>
                 </td>
             </tr>
         </table>

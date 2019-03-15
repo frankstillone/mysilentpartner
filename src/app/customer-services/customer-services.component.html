@@ -166,6 +166,8 @@
                             <td>{{accountDetails?.registeredOfficeCountry}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']"
+                        [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="principalPlaceOfBusiness">
                     <table class="table table-condensed table-bordered">
@@ -194,6 +196,8 @@
                             <td>{{accountDetails?.placeBusinessCountry}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']"
+                        [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="mainOfficeHolder">
                     <table class="table table-condensed table-bordered">
@@ -222,6 +226,8 @@
                             <td>{{accountDetails?.mainOfficeHolderSecretary}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']"
+                        [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container" id="principalContact">
                     <table class="table table-condensed table-bordered">
@@ -242,6 +248,8 @@
                             <td>{{accountDetails?.principalContactPhone}}</td>
                         </tr>
                     </table>
+                    <p><button class="btn btn-primary" [routerLink]="['../createOrUpdateCustomerAccount']"
+                        [queryParams]="{accountId: accountId}">Edit Account</button></p>
                 </div>
                 <div class="tab-pane container fade" id="paymentInformation">
                     <div *ngIf="cardType">

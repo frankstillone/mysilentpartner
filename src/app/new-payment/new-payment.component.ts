@@ -39,6 +39,7 @@ export class NewPaymentComponent implements OnInit {
     loading: boolean = false;
     jbId: any;
     jbClientId: any;
+    accountDetails: any;
 
     private formData = {}
 
@@ -53,6 +54,7 @@ export class NewPaymentComponent implements OnInit {
     ngOnInit() {
         this.formio.loadForm().then(form => (this.form = form));
         this.auth.ready.then(() => {
+            this.getAccountDetails();
             this.currentUser = Formio.currentUser();
             this.showPaymentScreen = this.authService.showCustomerScreen;
         });
@@ -62,6 +64,19 @@ export class NewPaymentComponent implements OnInit {
         style.type = 'text/css';
         style.appendChild(document.createTextNode(css));
         head.appendChild(style);
+    }
+
+    getAccountDetails(): void {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/account/submission?_id=' + this.accountId, options).subscribe((res: any) => {
+            let respon = res.json();
+            this.accountDetails = respon[0];
+            this.loading = false;
+        });
     }
 
     onSubmit(event: any) {
