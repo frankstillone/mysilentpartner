@@ -1,0 +1,7 @@
+<div *ngIf="showCustomerScreen">
+    <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
+        [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
+    <p></p><br>
+    <formio *ngIf="form" [form]="form" (submit)="createService($event)"></formio>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

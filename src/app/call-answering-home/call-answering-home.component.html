@@ -1,0 +1,98 @@
+<div *ngIf="showCustomerScreen">
+    <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
+            [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
+    <p></p>
+    <h4>Service Name : <strong>{{serviceDetails?.data?.callAnsweringServiceName}}</strong></h4>
+    <p></p>
+    <p></p>
+    <p></p>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#contacts" (click)="getContacts()">Contacts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vpn" (click)="getVirtualPhoneNumber()">Virtual Phone Number</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#vpnd" (click)="getVirtualPhoneNumberDiversion()">Virtual Phone
+                Number Diversion</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#callsIn">Calls In</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#callsOut">Calls Out</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#messages">Messages</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#plan">Plan</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <p></p>
+        <div class="tab-pane container active" id="summary">
+            Summary
+        </div>
+        <div class="tab-pane container" id="contacts">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let contact of allContacts">
+                        <td>{{ contact?.data.contactName }}</td>
+                        <td>{{ contact?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container" id="vpn">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let virtualPhoneNumber of allVirtualPhoneNumber">
+                        <td>{{ virtualPhoneNumber?.data.name }}</td>
+                        <td>{{ virtualPhoneNumber?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container" id="vpnd">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <th>Name</th>
+                    <th>Call Answering</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let virtualPhoneNumberDiversion of allVirtualPhoneNumberDiversion">
+                        <td>{{ virtualPhoneNumberDiversion?.data.name }}</td>
+                        <td>{{ virtualPhoneNumberDiversion?.data?.serviceType?.data?.callAnsweringServiceName }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane container" id="callsIn">
+            Calls In
+        </div>
+        <div class="tab-pane container" id="callsOut">
+            Calls Out
+        </div>
+        <div class="tab-pane container" id="messages">
+            Messages
+        </div>
+        <div class="tab-pane container" id="plan">
+            Plan
+        </div>
+    </div>
+    <div *ngIf="loading" class="loading">Loading&#8230;</div>
+</div>

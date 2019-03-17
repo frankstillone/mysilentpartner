@@ -1,9 +1,17 @@
 <div *ngIf="showCustomerScreen">
+    <h4 *ngIf="showEditMode">Account Name : <strong class="link" [routerLink]="['../customerServices']"
+        [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
     <div *ngIf="showEditMode">
+        
         <formio *ngIf="editAccountForm" [form]="editAccountForm" [submission]="accountDetails"
             (submit)="updateAccount($event)"></formio>
+        <button class="btn btn-primary" [routerLink]="['../customerServices']" [queryParams]="{accountId: accountDetails?._id}">
+            Cancel
+        </button>
     </div>
     <div *ngIf="!showEditMode">
+        <h4>Create New Account</h4>
+        <p></p>
         <formio *ngIf="newAccountForm" [form]="newAccountForm" (submit)="saveAccount($event)"></formio>
     </div>
     <div *ngIf="loading" class="loading">Loading&#8230;</div>

@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { AppConfig } from '../config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
+import { Formio } from 'formiojs';
 
 @Component({
     selector: 'app-customer-services',
@@ -39,6 +40,8 @@ export class CustomerServicesComponent implements OnInit {
     showFirst: boolean = false;
     showLast: boolean = false;
     searchString: any = '';
+    accountPayments: any;
+    accountInvoices: any;
 
     constructor(private authService: AuthService, private http: Http, private activatedRoute: ActivatedRoute, private router: Router, public auth: FormioAuthService) { }
 
@@ -83,6 +86,14 @@ export class CustomerServicesComponent implements OnInit {
             this.customerUser = respon;
             this.loading = false;
         });
+    }
+
+    editChildCustomer(customerType, customerId) {
+        if(customerType == 'child') {
+            this.router.navigate(['createUpdateCustomer'], {queryParams: { customerId: customerId, accountId: this.accountId }});
+        } else if(customerType == "parent") {
+            this.router.navigate(['createUpdateCustomer'], {queryParams: { customerId: customerId, accountId: this.accountId, customerType: 'parent' }});
+        }
     }
 
     newPayment() {
@@ -143,6 +154,73 @@ export class CustomerServicesComponent implements OnInit {
         this.http.get(this.appConfig.appUrl + '/addresslicenseservice/submission?data.accountName._id=' + this.accountId, options).subscribe((res: any) => {
             this.addressLicenseServices = res.json();
             this.loading = false;
+        });
+    }
+
+    disableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Inactive";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.customerUser[index].data.customer.data.status = "Inactive";
+                this.loading = false;
+            });
+        });
+    }
+
+    enableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Active";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.customerUser[index].data.customer.data.status = "Active";
+                this.loading = false;
+            });
+        });
+    }
+
+    getInvoicesForAccount() {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/invoice/user/" + this.accountDetails.jbId, options).subscribe((res: any) => {
+            this.accountInvoices = res.json();
+        });
+    }
+
+    getPaymentsForAccount() {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/payment/user/" + this.accountDetails.jbId, options).subscribe((res: any) => {
+            this.accountPayments = res.json();
+        });
+    }
+
+    downloadInvoice(invoiceId) {
+        var headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json');
+        headers.append('X-Auth-Token', this.appConfig.simpleBillingXAuthToken);
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.tspBilling + "/invoice/downloadPdf/" + invoiceId, options).subscribe((res: any) => {
+            window.location.href = res.url;
         });
     }
 

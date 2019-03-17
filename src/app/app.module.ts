@@ -24,6 +24,12 @@ import { LoginComponent } from './login/login.component';
 import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
 import { CreateUpdateCustomerAccountComponent } from './create-update-customer-account/create-update-customer-account.component';
+import { CreateAccountServiceComponent } from './create-account-service/create-account-service.component';
+import { UpdateAccountServiceComponent } from './update-account-service/update-account-service.component';
+import { AddressLicenseHomeComponent } from './address-license-home/address-license-home.component';
+import { CallAnsweringHomeComponent } from './call-answering-home/call-answering-home.component';
+import { LiveChatHomeComponent } from './live-chat-home/live-chat-home.component';
+import { EmailProcessingHomeComponent } from './email-processing-home/email-processing-home.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +48,12 @@ import { CreateUpdateCustomerAccountComponent } from './create-update-customer-a
         SubmitAdminResetPasswordComponent,
         CreateCustomerComponent,
         CreateUpdateCustomerAccountComponent,
+        CreateAccountServiceComponent,
+        UpdateAccountServiceComponent,
+        AddressLicenseHomeComponent,
+        CallAnsweringHomeComponent,
+        LiveChatHomeComponent,
+        EmailProcessingHomeComponent,
     ],
     imports: [
         BrowserModule,

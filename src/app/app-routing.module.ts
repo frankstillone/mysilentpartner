@@ -14,6 +14,12 @@ import { LoginComponent } from './login/login.component';
 import { SubmitAdminResetPasswordComponent } from './submit-admin-reset-password/submit-admin-reset-password.component';
 import { CreateCustomerComponent } from './create-customer/create-customer.component';
 import { CreateUpdateCustomerAccountComponent } from './create-update-customer-account/create-update-customer-account.component';
+import { CreateAccountServiceComponent } from './create-account-service/create-account-service.component';
+import { UpdateAccountServiceComponent } from './update-account-service/update-account-service.component';
+import { AddressLicenseHomeComponent } from './address-license-home/address-license-home.component';
+import { CallAnsweringHomeComponent } from './call-answering-home/call-answering-home.component';
+import { LiveChatHomeComponent } from './live-chat-home/live-chat-home.component';
+import { EmailProcessingHomeComponent } from './email-processing-home/email-processing-home.component';
 
 const routes: Routes = [
     {
@@ -50,7 +56,7 @@ const routes: Routes = [
         component: CreateUpdateCustomerAccountComponent
     },
     {
-        path: 'createCustomer',
+        path: 'createUpdateCustomer',
         component: CreateCustomerComponent
     },
     {
@@ -76,6 +82,30 @@ const routes: Routes = [
     {
         path: 'updatePayment',
         component: UpdatePaymentComponent
+    },
+    {
+        path: 'createAccountService',
+        component: CreateAccountServiceComponent
+    },
+    {
+        path: 'updateAccountService',
+        component: UpdateAccountServiceComponent
+    },
+    {
+        path: 'addressLicenseHome',
+        component: AddressLicenseHomeComponent
+    },
+    {
+        path: 'callAnsweringHome',
+        component: CallAnsweringHomeComponent
+    },
+    {
+        path: 'liveChatHome',
+        component: LiveChatHomeComponent
+    },
+    {
+        path: 'emailProcessingHome',
+        component: EmailProcessingHomeComponent
     }
 ];
 

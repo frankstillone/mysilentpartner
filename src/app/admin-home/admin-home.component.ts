@@ -4,6 +4,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormioAuthService } from 'angular-formio/auth';
 import { AppConfig } from '../config';
+import { Formio } from 'formiojs';
 
 @Component({
     selector: 'app-admin-home',
@@ -65,6 +66,26 @@ export class AdminHomeComponent implements OnInit {
         });
     }
 
+    getServicesList(skipEntries, searchQuery, firstTime) {
+        if (firstTime) {
+            this.skipEntries = 0;
+            this.searchString = '';
+        }
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        //TODO:: Searching is remaining in this
+        //let searchingQuery = searchQuery != '' ? '&data.userName__regex=/' + searchQuery + '/i' : '';
+        this.http.get(this.appConfig.appUrl + '/accountservice/submission?skip=' + skipEntries, options).subscribe((res: any) => {
+            this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
+            let respon = res.json();
+            this.allServices = respon;
+            this.loading = false;
+        });
+    }
+
     getCustomerList(skipEntries, searchQuery, firstTime) {
         if (firstTime) {
             this.skipEntries = 0;
@@ -79,8 +100,63 @@ export class AdminHomeComponent implements OnInit {
         this.http.get(this.appConfig.appUrl + '/customer/submission?skip=' + skipEntries + searchingQuery, options).subscribe((res: any) => {
             this.pagination((res.headers._headers.get('content-range')[0]).split("/").pop());
             let respon = res.json();
-            this.allCustomers = respon;
-            this.loading = false;
+            this.allCustomers = [];
+            let totalValues: any = respon.length;
+            Object.keys(respon).forEach((key) => {
+                if((totalValues - 1) == Number(key)) {
+                    this.loading = false;
+                }
+                this.http.get(this.appConfig.appUrl + '/account/submission?data.userName._id=' + respon[key]._id, options).subscribe((response: any) => {
+                    if (response.json().length) {
+                        this.allCustomers.push(new AllUsersRecord(respon[key]._id, respon[key].data.userName, respon[key].data.email,
+                            respon[key].data.status, response.json().length));
+                    } else {
+                        this.http.get(this.appConfig.appUrl + '/customeraccount/submission?data.customer._id=' + respon[key]._id, options).subscribe((childCustomerResponse: any) => {
+                            if (childCustomerResponse.json()[0]) {
+                                this.allCustomers.push(new AllUsersRecord(respon[key]._id, respon[key].data.userName, respon[key].data.email,
+                                    respon[key].data.status, childCustomerResponse.json().length));
+                            } else {
+                                this.allCustomers.push(new AllUsersRecord(respon[key]._id, respon[key].data.userName, respon[key].data.email,
+                                    respon[key].data.status, childCustomerResponse.json().length));
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }
+
+    disableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Inactive";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.allCustomers[index].status = "Inactive";
+                this.loading = false;
+            });
+        });
+    }
+
+    enableCustomer(customerId, index) {
+        this.loading = true;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append("x-jwt-token", this.authService.getJwtToken());
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(this.appConfig.appUrl + '/customer/submission/'+customerId, options).subscribe((res: any) => {
+            let response = res.json();
+            response.data.status = "Active";
+            const customer = new Formio(this.appConfig.appUrl + '/customer/submission/');
+            customer.saveSubmission(response).then(() => {
+                this.allCustomers[index].status = "Active";
+                this.loading = false;
+            });
         });
     }
 
@@ -105,10 +181,26 @@ export class AdminHomeComponent implements OnInit {
                 this.http.get(this.appConfig.appUrl + '/customeraccount/submission?data.account._id=' + respon[key]._id, options).subscribe((response: any) => {
                     let resp = response.json();
                     totalLinkedUsers = resp.length;
-                    this.allAccounts.push(new Record(respon[key]._id, respon[key].data.accountName, totalLinkedUsers, 0));
+                    this.http.get(this.appConfig.appUrl + '/addresslicenseservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((addressResponse: any) => {
+                        let addressRespon = addressResponse.json();
+                        totalLinkedServices = addressRespon.length;
+                        this.http.get(this.appConfig.appUrl + '/callansweringservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((callAnsResponse: any) => {
+                            let callAnsRespon = callAnsResponse.json();
+                            totalLinkedServices = totalLinkedServices + callAnsRespon.length;
+                            this.http.get(this.appConfig.appUrl + '/livechatservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((liveChatResponse: any) => {
+                                let liveChatRespon = liveChatResponse.json();
+                                totalLinkedServices = totalLinkedServices + liveChatRespon.length;
+                                this.http.get(this.appConfig.appUrl + '/emailprocessingservice/submission?data.accountName._id=' + respon[key]._id, options).subscribe((emailtResponse: any) => {
+                                    let emailRespon = emailtResponse.json();
+                                    totalLinkedServices = totalLinkedServices + emailRespon.length;
+                                    this.allAccounts.push(new Record(respon[key]._id, respon[key].data.accountName, totalLinkedUsers, totalLinkedServices));
+                                    this.loading = false;
+                                });
+                            });
+                        });
+                    });
                 });
             });
-            this.loading = false;
         });
     }
 
@@ -138,6 +230,8 @@ export class AdminHomeComponent implements OnInit {
             this.getCustomerList(this.skipEntries, this.searchString, false);
         } else if (paginationFor == 'account') {
             this.getAccountList(this.skipEntries, this.searchString, false);
+        } else if(paginationFor == 'service') {
+            this.getServicesList(this.skipEntries, this.searchString, false);
         }
     }
 
@@ -176,4 +270,8 @@ export class AdminHomeComponent implements OnInit {
 
 export class Record {
     constructor(public id, public accountName: string, public linkedUsers: number, public linkedServices: number) { }
+}
+
+export class AllUsersRecord {
+    constructor(public id, public userName, public email, public status, public accountsAttached: number) { }
 }

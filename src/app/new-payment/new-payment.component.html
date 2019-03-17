@@ -1,4 +1,6 @@
 <div *ngIf="showPaymentScreen">
+    <h4>Account Name : <strong class="link" [routerLink]="['../customerServices']"
+        [queryParams]="{accountId: accountDetails?._id}">{{accountDetails?.data?.accountName}}</strong></h4>
     <div class="alert alert-danger" *ngIf="showAlertBox">
         {{alertMessage}}
     </div>
@@ -8,5 +10,8 @@
     <p></p>
     <p></p>
     <formio *ngIf="form" [form]="form" (submit)="onSubmit($event)"></formio>
+    <button class="btn btn-primary" [routerLink]="['../customerServices']" [queryParams]="{accountId: accountDetails?._id}">
+        Cancel
+    </button>
     <div *ngIf="loading" class="loading">Loading&#8230;</div>
 </div>

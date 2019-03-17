@@ -7,18 +7,21 @@
             <a class="nav-link active" data-toggle="tab" href="#dashboard">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#employees" *ngIf="roleType == 'AdminL1'"
+            <a class="nav-link" data-toggle="tab" href="#employees"
+                *ngIf="roleType == 'AdminL1' || roleType == 'AdminL2'"
                 (click)="getEmployeesList(0, '', true)">Employees</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL2'"
+            <a class="nav-link" data-toggle="tab" href="#users" *ngIf="roleType == 'AdminL1' || roleType == 'AdminL3'"
                 (click)="getCustomerList(0, '', true)">Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#accounts" (click)="getAccountList(0, '', true)">Accounts</a>
+            <a class="nav-link" data-toggle="tab" href="#accounts"
+                *ngIf="roleType == 'AdminL1' || roleType == 'AdminL2' || roleType == 'AdminL3'"
+                (click)="getAccountList(0, '', true)">Accounts</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#services">Services</a>
+            <a class="nav-link" data-toggle="tab" href="#services" (click)="getServicesList(0, '', true)">Services</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#spare1">Spare</a>
@@ -104,25 +107,26 @@
                 <thead>
                     <th>ID</th>
                     <th>UserName</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
                     <th>Email Address</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Years Active</th>
                     <th>Status</th>
+                    <th>Accounts</th>
+                    <th>Action</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let customer of allCustomers">
-                        <td>{{ customer?._id }}</td>
-                        <td>{{ customer?.data?.userName }}</td>
-                        <td>{{ customer?.data?.firstName }}</td>
-                        <td>{{ customer?.data?.lastName }}</td>
-                        <td>{{ customer?.data?.email }}</td>
-                        <td>01/01/2020</td>
-                        <td>01/01/2020</td>
-                        <td>Active</td>
-                        <td>Active</td>
+                    <tr *ngFor="let customer of allCustomers;let i = index">
+                        <td>{{ customer?.id }}</td>
+                        <td>{{ customer?.userName }}</td>
+                        <td>{{ customer?.email }}</td>
+                        <td>{{ customer?.status }}</td>
+                        <td>{{ customer?.accountsAttached }}</td>
+                        <td>
+                            View |
+                            <span *ngIf="customer?.status == 'Active'" class="link"
+                                (click)="disableCustomer(customer.id, i)">Disable</span>
+                            <span *ngIf="customer?.status == 'Inactive'" class="link"
+                                (click)="enableCustomer(customer.id, i)">Enable</span>
+                        </td>
+                        <!-- <td>View | Disable</td> -->
                     </tr>
                 </tbody>
             </table>
@@ -193,7 +197,6 @@
         </div>
 
         <div class="tab-pane container fade" id="services">
-            DUMMY DATA
             <table class="table table-bordered table-condensed">
                 <thead>
                     <th>Service ID</th>
@@ -202,14 +205,46 @@
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Email</td>
-                        <td>Marry Poppins Email</td>
-                        <td>Active</td>
+                    <tr *ngFor="let service of allServices">
+                        <td>{{ service?._id }}</td>
+                        <td>
+                            {{ service?.data?.addressService?.data?.serviceType }}
+                            {{ service?.data?.emailService?.data?.serviceType }}
+                            {{ service?.data?.callAnsweringService?.data?.serviceType }}
+                            {{ service?.data?.liveChatService?.data?.serviceType }}
+                        </td>
+                        <td>
+                            {{ service?.data?.addressService?.data?.addressServiceName }}
+                            {{ service?.data?.emailService?.data?.emailServiceName }}
+                            {{ service?.data?.callAnsweringService?.data?.callAnsweringServiceName }}
+                            {{ service?.data?.liveChatService?.data?.liveChatServiceName }}
+                        </td>
+                        <td>
+                            {{ service?.data?.addressService?.data?.addressStatus }}
+                            {{ service?.data?.emailService?.data?.emailStatus }}
+                            {{ service?.data?.callAnsweringService?.data?.callAnsweringStatus }}
+                            {{ service?.data?.liveChatService?.data?.liveChatStatus }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="showFirst">
+                    <div class="page-link active" (click)="showDataByPage('first', 0, 'service', '')">First</div>
+                </li>
+                <li class="page-item" *ngIf="showPrevious">
+                    <div class="page-link active" (click)="showDataByPage('previous', 10, 'service', '')">Previous</div>
+                </li>
+                <li class="page-item" *ngFor="let times of ' '.repeat(totalPages).split('');let i = index">
+                    <div class="page-link active" (click)="showDataByPage('', i+'0', 'service', '')">{{i+1}}</div>
+                </li>
+                <li class="page-item" *ngIf="showNext">
+                    <div class="page-link active" (click)="showDataByPage('next', 10, 'service', '')">Next</div>
+                </li>
+                <li class="page-item" *ngIf="showLast">
+                    <div class="page-link active" (click)="showDataByPage('last', 0, 'service', '')">Last</div>
+                </li>
+            </ul>
         </div>
 
         <div class="tab-pane container fade" id="spare1">

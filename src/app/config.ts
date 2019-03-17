@@ -13,7 +13,7 @@ if (query.token) {
 export const AppConfig = {
     apiUrl: "https://api.form.io",
     appUrl: "https://bkvvieybeanbxoh.form.io",
-    simpleBillingXAuthToken: "b4dfb22e-6eac-4f94-9ee6-42e8ccd620dd",
+    simpleBillingXAuthToken: "9ea0e6da-ae2f-42b7-8564-402cf910cd30",
     tspBilling: "https://simplebilling.in:8444/tspbilling",
     customerEmailId: "metaField_720.value",
     creditCardHolderName: "0_metaField_165.value",
